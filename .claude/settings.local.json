@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \":*)",
+      "Bash(head -10 echo \"---\" grep -n \"All Rights\\\\|© 20\\\\|footer\\\\|Footer\" \"c:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/resume.jsx\")"
+    ]
+  }
+}
