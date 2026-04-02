@@ -1,6 +1,7 @@
 import { StrictMode, useState, useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import Navbar         from "./components/Navbar.jsx";
 import Home           from "./pages/Home.jsx";
 import PortfolioPage  from "./pages/PortfolioPage.jsx";
 import ServicesPage   from "./pages/ServicesPage.jsx";
@@ -50,6 +51,7 @@ function AnimatedRoutes() {
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
+      <Navbar />
       <AnimatedRoutes />
     </BrowserRouter>
   </StrictMode>

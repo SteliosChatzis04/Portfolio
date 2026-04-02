@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 
 /* ════════════════════════════════════════════════════════════
@@ -122,7 +121,6 @@ export default function AboutSection() {
 
   return (
     <>
-      <Navbar />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 

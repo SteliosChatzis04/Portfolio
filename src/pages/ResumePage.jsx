@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 
 const TIMELINE_DATA = [
@@ -440,7 +439,6 @@ export default function ResumePage() {
         }}
       >
         <ParticlesBg />
-        <Navbar />
 
         {/* ── HEADER ── */}
         <div style={{ paddingTop: 130, position: "relative", zIndex: 1 }}>

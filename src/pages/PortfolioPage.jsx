@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 
 /* ════════════════════════════════════════════════════
@@ -551,7 +550,6 @@ export default function PortfolioSection() {
   /* ── Grid ── */
   return (
     <>
-      <Navbar />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }

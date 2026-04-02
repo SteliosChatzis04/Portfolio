@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 import useOnScreen from "../hooks/useOnScreen.js";
 import AnimatedSection from "../components/AnimatedSection.jsx";
@@ -192,7 +191,6 @@ export default function Portfolio() {
         @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
       `}</style>
 
-      <Navbar/>
 
       {/* ═══ HERO ═══ */}
       <section id="hero" style={{ position:"relative",height:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:"0 48px",overflow:"hidden",background:"linear-gradient(135deg,#060d1a 0%,#0a1628 40%,#0d1f35 100%)" }}>
