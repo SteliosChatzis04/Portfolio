@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Footer from "../components/Footer.jsx";
+import { contact } from "../data/contact.js";
 
 /* ════════════════════════════════════════════
    CONTACT SECTION — Stelios Ch. Portfolio
@@ -300,11 +301,11 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <div style={{ color: "#64748b", fontSize: 11, fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 3 }}>Email</div>
-                    <a href="mailto:your.email@example.com" style={{
+                    <a href={`mailto:${contact.email}`} style={{
                       color: "#e2e8f0", fontSize: 14, textDecoration: "none",
                       transition: "color 0.2s ease",
                     }}>
-                      your.email@example.com
+                      {contact.email}
                     </a>
                   </div>
                 </div>
@@ -322,7 +323,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <div style={{ color: "#64748b", fontSize: 11, fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 3 }}>Location</div>
-                    <span style={{ color: "#e2e8f0", fontSize: 14 }}>Piraeus, Greece</span>
+                    <span style={{ color: "#e2e8f0", fontSize: 14 }}>{contact.location}</span>
                   </div>
                 </div>
 
@@ -339,7 +340,7 @@ export default function ContactSection() {
                     Find Me On
                   </div>
                   <a
-                    href="https://github.com/yourusername"
+                    href={contact.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     onMouseEnter={() => setHoverGithub(true)}

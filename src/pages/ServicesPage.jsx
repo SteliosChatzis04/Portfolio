@@ -1,46 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer.jsx";
-
-const SERVICES = [
-  {
-    title: "UI/UX Design",
-    description:
-      "Crafting intuitive interfaces through user research, wireframing, and iterative prototyping — always grounded in real user needs.",
-    icon: "design",
-  },
-  {
-    title: "Web Development",
-    description:
-      "Building responsive, performant websites with React, clean architecture, and modern tooling — from concept to deployment.",
-    icon: "code",
-  },
-  {
-    title: "Prototyping",
-    description:
-      "Creating high-fidelity interactive mockups in Axure RP and Figma to validate ideas and align stakeholders before development.",
-    icon: "prototype",
-  },
-];
-
-const WORKFLOW = [
-  {
-    step: "Discover",
-    detail: "Research users, audit competitors, define problems worth solving.",
-  },
-  {
-    step: "Define",
-    detail: "Synthesize insights into clear goals, personas, and success metrics.",
-  },
-  {
-    step: "Design",
-    detail: "Iterate from wireframes to polished UI with continuous user feedback.",
-  },
-  {
-    step: "Deliver",
-    detail: "Build, test, and ship — then measure, learn, and refine.",
-  },
-];
+import { services as SERVICES, workflow as WORKFLOW } from "../data/services.js";
 
 /* ── Icons ── */
 function ServiceIcon({ type, size = 56 }) {

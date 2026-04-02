@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer.jsx";
 import AnimatedSection from "../components/AnimatedSection.jsx";
+import { hero, bio, skills, featuredProjects, services as homeServices } from "../data/home.js";
 
 // ─── Interactive Particle Background (Refined) ───
 function ParticleHero() {
@@ -249,7 +250,7 @@ export default function Portfolio() {
           <TypewriterGreeting/>
           <AnimatedHeroTitle/>
           <p style={{ fontSize:"clamp(15px,1.4vw,19px)",color:"#6a7a94",lineHeight:1.75,maxWidth:"580px",margin:"0 auto 48px",animation:"blurFadeIn 1s ease 1.6s both" }}>
-            I design and build digital products that combine intuitive user experience with clean, modern code.
+            {hero.tagline}
           </p>
           <div style={{ display:"flex",gap:"20px",justifyContent:"center",flexWrap:"wrap",animation:"fadeInUp 0.8s ease 2s both",opacity:0 }}>
             <button onClick={() => navigate("/portfolio")}
@@ -277,9 +278,9 @@ export default function Portfolio() {
       {/* ═══ PORTFOLIO ═══ */}
       <section id="portfolio" style={{ padding:"70px 48px 50px",maxWidth:"1100px",margin:"0 auto" }}>
         <div style={{ display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"28px" }}>
-          <ProjectCard title="FinTech Dashboard App" subtitle="UI Design • Figma" imageUrl="linear-gradient(135deg,#0a1930 0%,#1a2a4a 50%,#0066cc 100%)" delay={0}/>
-          <ProjectCard title="Urban Streetwear" subtitle="Web Design • E-Commerce" imageUrl="linear-gradient(135deg,#1a1a2e 0%,#2d2d44 50%,#4a4a6a 100%)" delay={0.15}/>
-          <ProjectCard title="Wanderlust App" subtitle="Mobile App • UI Research" imageUrl="linear-gradient(135deg,#0d2137 0%,#1a3a5c 50%,#2a5a8c 100%)" delay={0.3}/>
+          {featuredProjects.map((p, i) => (
+            <ProjectCard key={p.title} title={p.title} subtitle={p.subtitle} imageUrl={p.imageUrl} delay={i * 0.15}/>
+          ))}
         </div>
       </section>
 
@@ -290,9 +291,12 @@ export default function Portfolio() {
           <SectionDivider/>
         </AnimatedSection>
         <div style={{ display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"28px" }}>
-          <ServiceCard icon={icons.uiux} title="UI/UX Design" description="Designing intuitive and visually stunning interfaces that prioritize user needs and create a memorable digital journey." delay={0.1}/>
-          <ServiceCard icon={icons.webdev} title="Web Dev" description="Building responsive, high-performance websites using modern technologies that deliver fast, seamless user experiences." delay={0.25}/>
-          <ServiceCard icon={icons.proto} title="Prototyping" description="Creating rapid, high-fidelity prototypes to bridge concepts, test usability, and iterate quickly for the best results." delay={0.4}/>
+          {homeServices.map((s, i) => {
+            const iconMap = { "UI/UX Design": icons.uiux, "Web Dev": icons.webdev, "Prototyping": icons.proto };
+            return (
+              <ServiceCard key={s.title} icon={iconMap[s.title]} title={s.title} description={s.description} delay={0.1 + i * 0.15}/>
+            );
+          })}
         </div>
       </section>
 
@@ -311,10 +315,10 @@ export default function Portfolio() {
           </AnimatedSection>
           <AnimatedSection delay={0.25} direction="right">
             <div>
-              <h3 style={{ fontSize:"26px",fontWeight:700,marginBottom:"20px",lineHeight:1.35,letterSpacing:"-0.3px" }}>Passionate about creating intuitive digital experiences.</h3>
-              <p style={{ fontSize:"15px",color:"#7a8ba8",lineHeight:1.85,marginBottom:"28px" }}>With a strong background in Computer Engineering and a passion for innovation, I bridge the gap between creative vision and technical precision. I focus on creating user-centric interfaces that solve real problems, ensuring that every digital experience not only functions but also feels intuitive, engaging, and visually compelling.</p>
+              <h3 style={{ fontSize:"26px",fontWeight:700,marginBottom:"20px",lineHeight:1.35,letterSpacing:"-0.3px" }}>{bio.headline}</h3>
+              <p style={{ fontSize:"15px",color:"#7a8ba8",lineHeight:1.85,marginBottom:"28px" }}>{bio.body}</p>
               <div style={{ display:"flex",flexWrap:"wrap",gap:"10px" }}>
-                {["Java","React","HTML/CSS","JavaScript","C","Python"].map(s => <SkillTag key={s} label={s}/>)}
+                {skills.map(s => <SkillTag key={s} label={s}/>)}
               </div>
             </div>
           </AnimatedSection>

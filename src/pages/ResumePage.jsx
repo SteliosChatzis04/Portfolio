@@ -1,37 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Footer from "../components/Footer.jsx";
-
-const TIMELINE_DATA = [
-  {
-    id: "edu-1",
-    category: "education",
-    title: "University of Peloponnese",
-    subtitle: "Electrical and Computer Engineering",
-    date: "2022 - Present",
-    description:
-      "Pursuing a degree in Electrical and Computer Engineering, building a strong foundation in software development, systems design, and engineering principles.",
-  },
-  {
-    id: "exp-1",
-    category: "experience",
-    title: "Full-Stack Developer & UX/UI Designer",
-    subtitle: "Freelance / Independent",
-    date: "2024 - Present",
-    description:
-      "Designing and developing end-to-end web applications with a focus on clean UI/UX, responsive design, and modern tech stacks.",
-  },
-];
-
-const SKILLS_DATA = [
-  {
-    category: "Web Development",
-    skills: ["HTML5", "CSS3", "JavaScript", "Node.js", "React.js", "Axure RP", "C", "Python"],
-  },
-  {
-    category: "Databases",
-    skills: ["MySQL", "SQLite", "PostgreSQL", "MongoDB", "Cassandra", "Neo4j"],
-  },
-];
+import { timeline as TIMELINE_DATA, skillCategories as SKILLS_DATA } from "../data/resume.js";
 
 /* ── Intersection Observer hook ── */
 function useReveal(threshold = 0.15) {
