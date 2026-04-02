@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer.jsx";
-import useOnScreen from "../hooks/useOnScreen.js";
 import AnimatedSection from "../components/AnimatedSection.jsx";
 
 // ─── Interactive Particle Background (Refined) ───
@@ -131,6 +130,54 @@ const icons = {
   arrow: (<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{flexShrink:0}}><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>),
 };
 
+// ─── Hero Text Animations ───
+function TypewriterGreeting() {
+  const text = "Hi! I am Stelios";
+  const [count, setCount] = useState(0);
+  const [cursorVisible, setCursorVisible] = useState(true);
+
+  useEffect(() => {
+    if (count < text.length) {
+      const t = setTimeout(() => setCount(c => c + 1), 72);
+      return () => clearTimeout(t);
+    }
+    const blink = setInterval(() => setCursorVisible(v => !v), 520);
+    const hide = setTimeout(() => { clearInterval(blink); setCursorVisible(false); }, 2600);
+    return () => { clearInterval(blink); clearTimeout(hide); };
+  }, [count]);
+
+  return (
+    <p style={{ fontSize:"13px",letterSpacing:"5px",textTransform:"uppercase",color:"#5a6a84",marginBottom:"28px",minHeight:"20px" }}>
+      {text.slice(0, count)}
+      <span style={{ color:"#00e5ff",animation: count < text.length ? "none" : "cursorBlink 0.52s step-end infinite",opacity: cursorVisible ? 1 : 0 }}>|</span>
+    </p>
+  );
+}
+
+function AnimatedHeroTitle() {
+  const words = [
+    { text:"Full-Stack", colored:false },
+    { text:"Developer", colored:false },
+    { text:"&", colored:false },
+    { text:"UX/UI", colored:true },
+    { text:"Designer", colored:true },
+  ];
+  return (
+    <h1 style={{ fontSize:"clamp(38px,5.5vw,72px)",fontWeight:700,lineHeight:1.2,marginBottom:"28px",letterSpacing:"-1px" }}>
+      {words.map((w, i) => (
+        <span key={i} style={{
+          display:"inline-block",
+          marginRight: i < words.length - 1 ? "0.28em" : 0,
+          animation:`wordReveal 0.75s cubic-bezier(0.22,1,0.36,1) forwards`,
+          animationDelay:`${0.9 + i * 0.12}s`,
+          opacity:0,
+          ...(w.colored ? { background:"linear-gradient(135deg,#00e5ff,#00b8d4)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent" } : {}),
+        }}>{w.text}</span>
+      ))}
+    </h1>
+  );
+}
+
 function SectionDivider() {
   return <div style={{ width:"60px",height:"3px",borderRadius:"2px",background:"linear-gradient(90deg,#00e5ff,transparent)",margin:"0 auto 48px" }}/>;
 }
@@ -189,6 +236,9 @@ export default function Portfolio() {
         ::selection{background:rgba(0,229,255,0.3);color:#fff}
         input::placeholder,textarea::placeholder{color:#4a5670}
         @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes wordReveal{from{opacity:0;transform:translateY(22px);filter:blur(6px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+        @keyframes blurFadeIn{from{opacity:0;filter:blur(8px)}to{opacity:1;filter:blur(0)}}
+        @keyframes cursorBlink{0%,100%{opacity:1}50%{opacity:0}}
       `}</style>
 
 
@@ -196,15 +246,12 @@ export default function Portfolio() {
       <section id="hero" style={{ position:"relative",height:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:"0 48px",overflow:"hidden",background:"linear-gradient(135deg,#060d1a 0%,#0a1628 40%,#0d1f35 100%)" }}>
         <ParticleHero/>
         <div style={{ position:"relative",zIndex:1,textAlign:"center",maxWidth:"860px",padding:"0 24px" }}>
-          <p style={{ fontSize:"13px",letterSpacing:"5px",textTransform:"uppercase",color:"#5a6a84",marginBottom:"28px",animation:"fadeInUp 0.8s ease forwards" }}>Hi! I am Stelios</p>
-          <h1 style={{ fontSize:"clamp(38px,5.5vw,72px)",fontWeight:700,lineHeight:1.1,marginBottom:"28px",animation:"fadeInUp 0.8s ease 0.2s both",letterSpacing:"-1px" }}>
-            Full-Stack Developer &{" "}
-            <span style={{ background:"linear-gradient(135deg,#00e5ff,#00b8d4)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent" }}>UX/UI Designer</span>
-          </h1>
-          <p style={{ fontSize:"clamp(15px,1.4vw,19px)",color:"#6a7a94",lineHeight:1.75,maxWidth:"580px",margin:"0 auto 48px",animation:"fadeInUp 0.8s ease 0.4s both" }}>
+          <TypewriterGreeting/>
+          <AnimatedHeroTitle/>
+          <p style={{ fontSize:"clamp(15px,1.4vw,19px)",color:"#6a7a94",lineHeight:1.75,maxWidth:"580px",margin:"0 auto 48px",animation:"blurFadeIn 1s ease 1.6s both" }}>
             I design and build digital products that combine intuitive user experience with clean, modern code.
           </p>
-          <div style={{ display:"flex",gap:"20px",justifyContent:"center",flexWrap:"wrap",animation:"fadeInUp 0.8s ease 0.6s both" }}>
+          <div style={{ display:"flex",gap:"20px",justifyContent:"center",flexWrap:"wrap",animation:"fadeInUp 0.8s ease 2s both",opacity:0 }}>
             <button onClick={() => navigate("/portfolio")}
               style={{ padding:"16px 38px",borderRadius:"8px",background:"linear-gradient(135deg,#0099cc,#00b8d4)",color:"#fff",border:"none",fontFamily:"'Outfit',sans-serif",fontSize:"15px",fontWeight:600,cursor:"pointer",display:"flex",alignItems:"center",gap:"10px",transition:"all 0.35s ease" }}
               onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-3px)";e.currentTarget.style.boxShadow="0 14px 36px rgba(0,184,212,0.4)";}}
