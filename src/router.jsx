@@ -1,7 +1,7 @@
 // src/router.jsx
 import { useState, useEffect, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import Home          from "./pages/Home.jsx";
+import Home          from "./pages/Home/index.jsx";
 import PortfolioPage from "./pages/PortfolioPage.jsx";
 import ServicesPage  from "./pages/ServicesPage.jsx";
 import AboutPage     from "./pages/AboutPage.jsx";
