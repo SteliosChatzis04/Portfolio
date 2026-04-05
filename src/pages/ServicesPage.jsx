@@ -256,11 +256,6 @@ export default function ServicesSection() {
         .cp-ring-2 { border: 1.5px solid rgba(129,140,248,0.55); animation-delay: 160ms; }
         .cp-ring-3 { border: 1px   solid rgba(56,189,248,0.3);  animation-delay: 310ms; }
 
-        @keyframes btnShimmer { 0% { left: -75% } 100% { left: 125% } }
-        .btn-cool { position: relative !important; overflow: hidden !important; }
-        .btn-cool::after { content: ''; position: absolute; top: -50%; left: -75%; width: 50%; height: 200%; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%); pointer-events: none; }
-        .btn-cool:hover::after { animation: btnShimmer 0.65s ease forwards; }
-
         /* Mobile: collapse to left-side single column */
         @media (max-width: 640px) {
           .wf-row { grid-template-columns: 40px 1fr !important; }

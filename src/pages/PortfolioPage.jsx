@@ -374,10 +374,6 @@ export default function PortfolioSection() {
     <>
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        @keyframes btnShimmer { 0% { left: -75% } 100% { left: 125% } }
-        .btn-cool { position: relative !important; overflow: hidden !important; }
-        .btn-cool::after { content: ''; position: absolute; top: -50%; left: -75%; width: 50%; height: 200%; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%); pointer-events: none; }
-        .btn-cool:hover::after { animation: btnShimmer 0.65s ease forwards; }
       `}</style>
 
       <section

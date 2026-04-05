@@ -1,7 +1,7 @@
 import { useState }    from "react";
 import AnimatedSection from "../../components/AnimatedSection.jsx";
 import Card            from "../../components/Card.jsx";
-import { fonts }       from "../../tokens.js";
+import { fonts, colors } from "../../tokens.js";
 
 export default function ProjectCard({ title, subtitle, imageUrl, delay }) {
   const [hovered, setHovered] = useState(false);
@@ -22,7 +22,7 @@ export default function ProjectCard({ title, subtitle, imageUrl, delay }) {
           <h3 style={{ fontFamily: fonts.body, fontSize: "16px", fontWeight: 600, color: "#fff", margin: "0 0 6px" }}>
             {title}
           </h3>
-          <p style={{ fontFamily: fonts.body, fontSize: "12px", color: "#7a8ba8", margin: 0 }}>
+          <p style={{ fontFamily: fonts.body, fontSize: "12px", color: colors.textSecondary, margin: 0 }}>
             {subtitle}
           </p>
         </div>
