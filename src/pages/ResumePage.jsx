@@ -1,37 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import useOnScreen from "../hooks/useOnScreen.js";
+import { colors, fonts } from "../tokens.js";
 import Footer from "../components/Footer.jsx";
 import { timeline as TIMELINE_DATA, skillCategories as SKILLS_DATA } from "../data/resume.js";
 
-/* ── Intersection Observer hook ── */
-function useReveal(threshold = 0.15) {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setVisible(true);
-          io.unobserve(el);
-        }
-      },
-      { threshold }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [threshold]);
-  return [ref, visible];
-}
-
 /* ── Timeline Card ── */
 function TimelineCard({ item, index, side }) {
-  const [ref, visible] = useReveal(0.15);
+  const [ref, isVisible] = useOnScreen({ threshold: 0.15 });
   const isLeft = side === "left";
   const colorAccent =
     item.category === "education"
-      ? { main: "#a78bfa", bg: "rgba(167,139,250,0.1)", border: "rgba(167,139,250,0.25)" }
-      : { main: "#38bdf8", bg: "rgba(56,189,248,0.1)", border: "rgba(56,189,248,0.25)" };
+      ? { main: colors.purple, bg: "rgba(167,139,250,0.1)", border: "rgba(167,139,250,0.25)" }
+      : { main: colors.sky, bg: "rgba(56,189,248,0.1)", border: "rgba(56,189,248,0.25)" };
 
   return (
     <div
@@ -44,12 +24,12 @@ function TimelineCard({ item, index, side }) {
         padding: "30px 32px 28px",
         position: "relative",
         backdropFilter: "blur(12px)",
-        opacity: visible ? 1 : 0,
-        transform: visible
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible
           ? "translateY(0) translateX(0)"
           : `translateY(24px) translateX(${isLeft ? "-30px" : "30px"})`,
         transition: `all 0.75s cubic-bezier(.22,1,.36,1) ${index * 0.18}s`,
-        boxShadow: visible
+        boxShadow: isVisible
           ? "0 8px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)"
           : "none",
         overflow: "hidden",
@@ -91,8 +71,8 @@ function TimelineCard({ item, index, side }) {
           margin: "0 0 6px",
           fontSize: 21,
           fontWeight: 700,
-          color: "#f1f5f9",
-          fontFamily: "'Sora', sans-serif",
+          color: colors.textPrimary,
+          fontFamily: fonts.body,
           lineHeight: 1.3,
           wordBreak: "break-word",
         }}
@@ -104,7 +84,7 @@ function TimelineCard({ item, index, side }) {
         style={{
           margin: "0 0 8px",
           fontSize: 14,
-          color: "#94a3b8",
+          color: colors.textSecondary,
           fontFamily: "'DM Sans', sans-serif",
         }}
       >
@@ -115,7 +95,7 @@ function TimelineCard({ item, index, side }) {
         style={{
           display: "inline-block",
           fontSize: 12,
-          color: "#64748b",
+          color: colors.textMuted,
           marginBottom: 14,
           fontFamily: "'DM Mono', monospace",
           background: "rgba(100,116,139,0.1)",
@@ -144,7 +124,7 @@ function TimelineCard({ item, index, side }) {
 /* ── Skill Chip ── */
 function SkillChip({ label, delay }) {
   const [hovered, setHovered] = useState(false);
-  const [ref, visible] = useReveal(0.1);
+  const [ref, isVisible] = useOnScreen({ threshold: 0.15 });
 
   return (
     <span
@@ -161,13 +141,13 @@ function SkillChip({ label, delay }) {
         letterSpacing: "0.02em",
         color: hovered ? "#0f172a" : "#e2e8f0",
         background: hovered
-          ? "linear-gradient(135deg, #38bdf8, #818cf8)"
+          ? `linear-gradient(135deg, ${colors.sky}, ${colors.indigo})`
           : "rgba(56,189,248,0.08)",
         border: `1px solid ${hovered ? "transparent" : "rgba(56,189,248,0.2)"}`,
         cursor: "default",
         transition: "all 0.3s cubic-bezier(.22,1,.36,1)",
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0) scale(1)" : "translateY(15px) scale(0.9)",
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0) scale(1)" : "translateY(15px) scale(0.9)",
         transitionDelay: `${delay}s`,
         boxShadow: hovered ? "0 4px 20px rgba(56,189,248,0.3)" : "none",
       }}
@@ -263,8 +243,8 @@ function ParticlesBg() {
 
 /* ── Main Resume Page ── */
 export default function ResumePage() {
-  const [headerRef, headerVisible] = useReveal(0.1);
-  const [skillsTitleRef, skillsTitleVisible] = useReveal(0.1);
+  const [headerRef, headerVisible] = useOnScreen({ threshold: 0.15 });
+  const [skillsTitleRef, skillsTitleVisible] = useOnScreen({ threshold: 0.15 });
 
 
   return (
@@ -323,7 +303,7 @@ export default function ResumePage() {
           width: 16px;
           height: 16px;
           border-radius: 50%;
-          background: radial-gradient(circle, #38bdf8 30%, rgba(56,189,248,0.3));
+          background: radial-gradient(circle, ${colors.sky} 30%, rgba(56,189,248,0.3));
           box-shadow: 0 0 18px rgba(56,189,248,0.45);
           position: relative;
           z-index: 2;
@@ -427,7 +407,7 @@ export default function ResumePage() {
               style={{
                 fontSize: 50,
                 fontWeight: 800,
-                fontFamily: "'Sora', sans-serif",
+                fontFamily: fonts.body,
                 lineHeight: 1.15,
                 marginBottom: 14,
                 background: "linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%)",
@@ -441,19 +421,19 @@ export default function ResumePage() {
               style={{
                 fontSize: 21,
                 fontWeight: 500,
-                background: "linear-gradient(135deg, #38bdf8, #818cf8)",
+                background: `linear-gradient(135deg, ${colors.sky}, ${colors.indigo})`,
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 marginBottom: 10,
               }}
             >
-              Full Stack Developer & UI Designer
+              Software Engineer & Full-Stack Developer
             </p>
             <div
               style={{
                 width: 60,
                 height: 3,
-                background: "linear-gradient(90deg, #38bdf8, #818cf8)",
+                background: `linear-gradient(90deg, ${colors.sky}, ${colors.indigo})`,
                 borderRadius: 2,
                 margin: "22px auto 0",
               }}
@@ -520,7 +500,7 @@ export default function ResumePage() {
                 style={{
                   fontSize: 34,
                   fontWeight: 700,
-                  fontFamily: "'Sora', sans-serif",
+                  fontFamily: fonts.body,
                   background: "linear-gradient(135deg, #f1f5f9, #cbd5e1)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
@@ -533,7 +513,7 @@ export default function ResumePage() {
                 style={{
                   width: 40,
                   height: 3,
-                  background: "linear-gradient(90deg, #38bdf8, #818cf8)",
+                  background: `linear-gradient(90deg, ${colors.sky}, ${colors.indigo})`,
                   borderRadius: 2,
                   margin: "0 auto",
                 }}
@@ -548,9 +528,9 @@ export default function ResumePage() {
                     fontWeight: 700,
                     letterSpacing: "0.08em",
                     textTransform: "uppercase",
-                    color: "#38bdf8",
+                    color: colors.sky,
                     marginBottom: 16,
-                    fontFamily: "'Sora', sans-serif",
+                    fontFamily: fonts.body,
                   }}
                 >
                   {group.category}
@@ -564,7 +544,7 @@ export default function ResumePage() {
             ))}
           </div>
         </div>
-        <Footer accent="#38bdf8" accentEnd="#818cf8" />
+        <Footer accent={colors.sky} accentEnd={colors.indigo} />
       </div>
     </>
   );
