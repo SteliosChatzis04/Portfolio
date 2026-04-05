@@ -1,4 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
+import useOnScreen from "../hooks/useOnScreen.js";
+import { EmailIcon, LocationIcon } from "../icons.jsx";
+import { colors, fonts } from "../tokens.js";
 import Footer from "../components/Footer.jsx";
 import { contact } from "../data/contact.js";
 
@@ -8,47 +11,11 @@ import { contact } from "../data/contact.js";
    Design system:
    - Background: #0B0F19
    - Font: Sora
-   - Accent gradient: #38bdf8 → #818cf8
+   - Accent gradient: sky → indigo
    - Heading gradient: #f1f5f9 → #cbd5e1
    - Cards: frosted glass, backdrop-blur
    - Animations: scroll-triggered, cubic-bezier(.22,1,.36,1)
    ════════════════════════════════════════════ */
-
-/* ── Scroll reveal hook ── */
-function useReveal(threshold = 0.15) {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => e.isIntersecting && setVisible(true),
-      { threshold }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [threshold]);
-  return [ref, visible];
-}
-
-/* ── Icons ── */
-function EmailIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="2" y="4" width="20" height="16" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-    </svg>
-  );
-}
-
-function LocationIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-  );
-}
 
 function GithubIcon({ size = 20 }) {
   return (
@@ -77,10 +44,9 @@ function CheckIcon() {
 
 /* ── Main Component ── */
 export default function ContactSection() {
-  const [headerRef, headerVisible] = useReveal(0.2);
-  const [infoRef, infoVisible] = useReveal(0.15);
-  const [formRef, formVisible] = useReveal(0.1);
-  const [footerRef, footerVisible] = useReveal(0.3);
+  const [headerRef, headerVisible] = useOnScreen({ threshold: 0.15 });
+  const [infoRef, infoVisible] = useOnScreen({ threshold: 0.15 });
+  const [formRef, formVisible] = useOnScreen({ threshold: 0.15 });
 
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [touched, setTouched] = useState({});
@@ -111,7 +77,7 @@ export default function ContactSection() {
 
   const borderForState = (field) => {
     const s = getFieldState(field);
-    if (focused === field) return "1px solid #38bdf8";
+    if (focused === field) return `1px solid ${colors.sky}`;
     if (s === "valid") return "1px solid rgba(74,222,128,0.4)";
     if (s === "error") return "1px solid rgba(248,113,113,0.5)";
     return "1px solid rgba(255,255,255,0.08)";
@@ -131,7 +97,7 @@ export default function ContactSection() {
     backdropFilter: "blur(8px)",
     color: "#e2e8f0",
     fontSize: 14,
-    fontFamily: "'Sora', sans-serif",
+    fontFamily: fonts.body,
     outline: "none",
     transition: "all 0.3s ease",
     letterSpacing: "0.01em",
@@ -164,14 +130,18 @@ export default function ContactSection() {
           50% { transform: scale(1.05); opacity: 1; }
           100% { transform: scale(1); opacity: 1; }
         }
+        @keyframes btnShimmer { 0% { left: -75% } 100% { left: 125% } }
+        .btn-cool { position: relative !important; overflow: hidden !important; }
+        .btn-cool::after { content: ''; position: absolute; top: -50%; left: -75%; width: 50%; height: 200%; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%); pointer-events: none; }
+        .btn-cool:hover::after { animation: btnShimmer 0.65s ease forwards; }
       `}</style>
 
       <section
         id="contact"
         style={{
           position: "relative",
-          background: "#0B0F19",
-          fontFamily: "'Sora', sans-serif",
+          background: colors.bg,
+          fontFamily: fonts.body,
           padding: "100px 24px 0",
           overflow: "hidden",
           minHeight: "100vh",
@@ -219,7 +189,7 @@ export default function ContactSection() {
             <h2 style={{
               fontSize: "clamp(32px, 5vw, 44px)",
               fontWeight: 700,
-              background: "linear-gradient(135deg, #f1f5f9, #cbd5e1)",
+              background: `linear-gradient(135deg, ${colors.textPrimary}, #cbd5e1)`,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               letterSpacing: "-0.02em",
@@ -231,17 +201,17 @@ export default function ContactSection() {
               width: 50,
               height: 3,
               borderRadius: 2,
-              background: "linear-gradient(90deg, #38bdf8, #818cf8)",
+              background: `linear-gradient(90deg, ${colors.sky}, ${colors.indigo})`,
               margin: "0 auto 20px",
             }} />
             <p style={{
-              color: "#94a3b8",
+              color: colors.textSecondary,
               fontSize: 15,
               lineHeight: 1.7,
               maxWidth: 480,
               margin: "0 auto",
             }}>
-              Have a project in mind? I'd love to hear about it. Fill out the form below or reach out directly — let's create something great.
+              Have a project in mind? Reach out directly or use the form — I'll get back to you promptly.
             </p>
           </div>
 
@@ -280,12 +250,12 @@ export default function ContactSection() {
                   Get in Touch
                 </h3>
                 <p style={{
-                  color: "#64748b",
+                  color: colors.textMuted,
                   fontSize: 13,
                   lineHeight: 1.6,
                   marginBottom: 32,
                 }}>
-                  I'm currently available for freelance work and open to discussing new projects and opportunities.
+                  I'm currently open to project collaborations, internships, and interesting engineering problems.
                 </p>
 
                 {/* ── Email ── */}
@@ -300,7 +270,7 @@ export default function ContactSection() {
                     <EmailIcon />
                   </div>
                   <div>
-                    <div style={{ color: "#64748b", fontSize: 11, fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 3 }}>Email</div>
+                    <div style={{ color: colors.textMuted, fontSize: 11, fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 3 }}>Email</div>
                     <a href={`mailto:${contact.email}`} style={{
                       color: "#e2e8f0", fontSize: 14, textDecoration: "none",
                       transition: "color 0.2s ease",
@@ -322,7 +292,7 @@ export default function ContactSection() {
                     <LocationIcon />
                   </div>
                   <div>
-                    <div style={{ color: "#64748b", fontSize: 11, fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 3 }}>Location</div>
+                    <div style={{ color: colors.textMuted, fontSize: 11, fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 3 }}>Location</div>
                     <span style={{ color: "#e2e8f0", fontSize: 14 }}>{contact.location}</span>
                   </div>
                 </div>
@@ -336,13 +306,14 @@ export default function ContactSection() {
 
                 {/* ── Social ── */}
                 <div>
-                  <div style={{ color: "#64748b", fontSize: 11, fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 14 }}>
+                  <div style={{ color: colors.textMuted, fontSize: 11, fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 14 }}>
                     Find Me On
                   </div>
                   <a
                     href={contact.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="btn-cool"
                     onMouseEnter={() => setHoverGithub(true)}
                     onMouseLeave={() => setHoverGithub(false)}
                     style={{
@@ -352,14 +323,15 @@ export default function ContactSection() {
                       padding: "10px 18px",
                       borderRadius: 10,
                       background: hoverGithub ? "rgba(56,189,248,0.1)" : "rgba(255,255,255,0.04)",
-                      border: `1px solid ${hoverGithub ? "rgba(56,189,248,0.25)" : "rgba(255,255,255,0.06)"}`,
-                      color: hoverGithub ? "#38bdf8" : "#94a3b8",
+                      border: `1px solid ${hoverGithub ? "rgba(56,189,248,0.4)" : "rgba(255,255,255,0.06)"}`,
+                      color: hoverGithub ? colors.sky : colors.textSecondary,
                       fontSize: 13,
                       fontWeight: 500,
-                      fontFamily: "'Sora', sans-serif",
+                      fontFamily: fonts.body,
                       textDecoration: "none",
-                      transition: "all 0.3s ease",
+                      transition: "all 0.35s cubic-bezier(0.22,1,0.36,1)",
                       cursor: "pointer",
+                      transform: hoverGithub ? "translateY(-3px) scale(1.03)" : "translateY(0) scale(1)",
                     }}
                   >
                     <GithubIcon size={18} />
@@ -390,7 +362,7 @@ export default function ContactSection() {
                   {/* Name */}
                   <div style={{ marginBottom: 20, position: "relative" }}>
                     <label style={{
-                      display: "block", color: "#94a3b8", fontSize: 12,
+                      display: "block", color: colors.textSecondary, fontSize: 12,
                       fontWeight: 500, marginBottom: 8, letterSpacing: "0.03em",
                     }}>
                       Your Name
@@ -426,7 +398,7 @@ export default function ContactSection() {
                   {/* Email */}
                   <div style={{ marginBottom: 20, position: "relative" }}>
                     <label style={{
-                      display: "block", color: "#94a3b8", fontSize: 12,
+                      display: "block", color: colors.textSecondary, fontSize: 12,
                       fontWeight: 500, marginBottom: 8, letterSpacing: "0.03em",
                     }}>
                       Your Email
@@ -462,7 +434,7 @@ export default function ContactSection() {
                   {/* Message */}
                   <div style={{ marginBottom: 28, position: "relative" }}>
                     <label style={{
-                      display: "block", color: "#94a3b8", fontSize: 12,
+                      display: "block", color: colors.textSecondary, fontSize: 12,
                       fontWeight: 500, marginBottom: 8, letterSpacing: "0.03em",
                     }}>
                       Tell Me About Your Project
@@ -501,6 +473,7 @@ export default function ContactSection() {
 
                   {/* Submit */}
                   <button
+                    className="btn-cool"
                     onClick={handleSubmit}
                     onMouseEnter={() => setHoverBtn(true)}
                     onMouseLeave={() => setHoverBtn(false)}
@@ -513,20 +486,16 @@ export default function ContactSection() {
                       padding: "15px 32px",
                       borderRadius: 12,
                       border: "none",
-                      background: hoverBtn
-                        ? "linear-gradient(135deg, #38bdf8, #6366f1)"
-                        : "linear-gradient(135deg, #38bdf8, #818cf8)",
-                      color: "#0B0F19",
+                      background: `linear-gradient(135deg, ${colors.sky}, ${colors.indigo})`,
+                      color: colors.bg,
                       fontSize: 15,
                       fontWeight: 600,
-                      fontFamily: "'Sora', sans-serif",
+                      fontFamily: fonts.body,
                       letterSpacing: "0.02em",
                       cursor: "pointer",
-                      transition: "all 0.35s ease",
-                      boxShadow: hoverBtn
-                        ? "0 8px 30px rgba(56,189,248,0.35)"
-                        : "0 4px 20px rgba(56,189,248,0.2)",
-                      transform: hoverBtn ? "translateY(-2px)" : "translateY(0)",
+                      transition: "all 0.35s cubic-bezier(0.22,1,0.36,1)",
+                      boxShadow: "none",
+                      transform: hoverBtn ? "translateY(-5px) scale(1.04)" : "translateY(0) scale(1)",
                     }}
                   >
                     Send Message
@@ -561,10 +530,11 @@ export default function ContactSection() {
                   }}>
                     Message Sent!
                   </h3>
-                  <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.6, maxWidth: 320, margin: "0 auto 28px" }}>
+                  <p style={{ color: colors.textSecondary, fontSize: 14, lineHeight: 1.6, maxWidth: 320, margin: "0 auto 28px" }}>
                     Thanks for reaching out. I'll get back to you within 24 hours.
                   </p>
                   <button
+                    className="btn-cool"
                     onClick={() => {
                       setSubmitted(false);
                       setFormData({ name: "", email: "", message: "" });
@@ -575,13 +545,15 @@ export default function ContactSection() {
                       borderRadius: 8,
                       border: "1px solid rgba(255,255,255,0.1)",
                       background: "rgba(255,255,255,0.04)",
-                      color: "#94a3b8",
+                      color: colors.textSecondary,
                       fontSize: 13,
                       fontWeight: 500,
-                      fontFamily: "'Sora', sans-serif",
+                      fontFamily: fonts.body,
                       cursor: "pointer",
-                      transition: "all 0.2s ease",
+                      transition: "all 0.35s cubic-bezier(0.22,1,0.36,1)",
                     }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px) scale(1.04)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)"; e.currentTarget.style.color = "#e2e8f0"; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0) scale(1)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = colors.textSecondary; }}
                   >
                     Send Another Message
                   </button>
