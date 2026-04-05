@@ -9,7 +9,7 @@ export const colors = {
   // Global accent — Home, Navbar, Footer, shared components
   accent:     "#00e5ff",
   accentDim:  "#00b8d4",
-  accentSoft: "rgba(0,229,255,0.08)",
+  accentSoft: "rgba(0,229,255,0.08)",  // background fill tint
 
   // Per-section accents (intentional — see design spec)
   sky:        "#38bdf8",   // Resume, Services, Contact
@@ -19,11 +19,11 @@ export const colors = {
 
   // Text
   textPrimary:   "#f1f5f9",
-  textSecondary: "#7a8ba8",
-  textMuted:     "#4a5670",
+  textSecondary: "#94a3b8",
+  textMuted:     "#64748b",
 
   // Borders (global)
-  border:      "rgba(0,229,255,0.08)",
+  border:      "rgba(0,229,255,0.08)",  // default card/element border
   borderHover: "rgba(0,229,255,0.25)",
 };
 
