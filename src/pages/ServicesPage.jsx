@@ -1,70 +1,14 @@
 import { useState, useEffect, useRef } from "react";
+import useOnScreen from "../hooks/useOnScreen.js";
+import { ServiceIcon } from "../icons.jsx";
+import { colors, fonts } from "../tokens.js";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer.jsx";
 import { services as SERVICES, workflow as WORKFLOW } from "../data/services.js";
 
-/* ── Icons ── */
-function ServiceIcon({ type, size = 56 }) {
-  const circleStyle = {
-    width: size,
-    height: size,
-    borderRadius: "50%",
-    border: "2px solid #38bdf8",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    background: "rgba(56, 189, 248, 0.06)",
-    flexShrink: 0,
-  };
-  if (type === "design") {
-    return (
-      <div style={circleStyle}>
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="3" y="3" width="18" height="18" rx="2" />
-          <path d="M3 9h18" /><path d="M9 21V9" /><circle cx="16" cy="15" r="2" />
-        </svg>
-      </div>
-    );
-  }
-  if (type === "code") {
-    return (
-      <div style={circleStyle}>
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /><line x1="14" y1="4" x2="10" y2="20" />
-        </svg>
-      </div>
-    );
-  }
-  return (
-    <div style={circleStyle}>
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="5" y="2" width="14" height="20" rx="2" /><line x1="12" y1="18" x2="12" y2="18.01" />
-        <path d="M9 6h6" /><path d="M9 10h6" /><path d="M9 14h4" />
-      </svg>
-    </div>
-  );
-}
-
-/* ── Scroll reveal hook ── */
-function useScrollReveal(threshold = 0.15) {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
-      { threshold }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [threshold]);
-  return [ref, visible];
-}
-
 /* ── Service card ── */
 function ServiceCard({ service, index }) {
-  const [ref, visible] = useScrollReveal(0.2);
+  const [ref, isVisible] = useOnScreen({ threshold: 0.2 });
   const [hovered, setHovered] = useState(false);
   return (
     <div
@@ -85,8 +29,8 @@ function ServiceCard({ service, index }) {
         gap: 20,
         cursor: "default",
         transition: "all 0.5s cubic-bezier(.22,1,.36,1)",
-        transform: visible ? (hovered ? "translateY(-8px)" : "translateY(0)") : "translateY(30px)",
-        opacity: visible ? 1 : 0,
+        transform: isVisible ? (hovered ? "translateY(-8px)" : "translateY(0)") : "translateY(30px)",
+        opacity: isVisible ? 1 : 0,
         transitionDelay: `${index * 120}ms`,
         boxShadow: hovered
           ? "0 20px 60px rgba(0,0,0,0.3), 0 0 40px rgba(56,189,248,0.06)"
@@ -94,10 +38,10 @@ function ServiceCard({ service, index }) {
       }}
     >
       <ServiceIcon type={service.icon} />
-      <h3 style={{ fontSize: 20, fontWeight: 600, color: "#e2e8f0", fontFamily: "'Sora', sans-serif", letterSpacing: "-0.01em" }}>
+      <h3 style={{ fontSize: 20, fontWeight: 600, color: colors.textPrimary, fontFamily: fonts.body, letterSpacing: "-0.01em" }}>
         {service.title}
       </h3>
-      <p style={{ fontSize: 14, lineHeight: 1.7, color: "#94a3b8", fontFamily: "'Sora', sans-serif", maxWidth: 260 }}>
+      <p style={{ fontSize: 14, lineHeight: 1.7, color: colors.textSecondary, fontFamily: fonts.body, maxWidth: 260 }}>
         {service.description}
       </p>
     </div>
@@ -127,8 +71,8 @@ function WorkflowItem({ step, index, reached, isLast, dotRef }) {
           fontWeight: 700,
           letterSpacing: "0.14em",
           textTransform: "uppercase",
-          color: "#38bdf8",
-          fontFamily: "'Sora', sans-serif",
+          color: colors.sky,
+          fontFamily: fonts.body,
           marginBottom: 10,
           opacity: 0.8,
         }}
@@ -140,7 +84,7 @@ function WorkflowItem({ step, index, reached, isLast, dotRef }) {
         style={{
           fontSize: "clamp(28px, 3.8vw, 46px)",
           fontWeight: 800,
-          fontFamily: "'Sora', sans-serif",
+          fontFamily: fonts.body,
           background: "linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
@@ -157,7 +101,7 @@ function WorkflowItem({ step, index, reached, isLast, dotRef }) {
           fontSize: 14.5,
           lineHeight: 1.8,
           color: "#64748b",
-          fontFamily: "'Sora', sans-serif",
+          fontFamily: fonts.body,
           margin: 0,
         }}
       >
@@ -179,7 +123,7 @@ function WorkflowItem({ step, index, reached, isLast, dotRef }) {
             position: "relative",
             zIndex: 2,
             background: reached
-              ? "linear-gradient(135deg, #38bdf8, #818cf8)"
+              ? `linear-gradient(135deg, ${colors.sky}, ${colors.indigo})`
               : "rgba(255,255,255,0.1)",
             border: reached
               ? "2px solid rgba(56,189,248,0.5)"
@@ -232,9 +176,9 @@ function WorkflowItem({ step, index, reached, isLast, dotRef }) {
    MAIN COMPONENT
    ════════════════════════════════════ */
 export default function ServicesSection() {
-  const [headingRef, headingVisible] = useScrollReveal(0.2);
-  const [workflowHeadingRef, workflowHeadingVisible] = useScrollReveal(0.2);
-  const [ctaRef, ctaVisible] = useScrollReveal(0.2);
+  const [headingRef, headingVisible] = useOnScreen({ threshold: 0.2 });
+  const [workflowHeadingRef, workflowHeadingVisible] = useOnScreen({ threshold: 0.2 });
+  const [ctaRef, ctaVisible] = useOnScreen({ threshold: 0.2 });
 
   /* ── Workflow scroll state ── */
   const wfContainerRef = useRef(null);
@@ -281,9 +225,9 @@ export default function ServicesSection() {
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        @keyframes scrollBounce {
-          0%, 100% { transform: translateX(-50%) translateY(0); }
-          50%       { transform: translateX(-50%) translateY(7px); }
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateX(-50%) translateY(30px); }
+          to   { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
 
         /* Checkpoint ring burst */
@@ -313,6 +257,11 @@ export default function ServicesSection() {
         .cp-ring-2 { border: 1.5px solid rgba(129,140,248,0.55); animation-delay: 160ms; }
         .cp-ring-3 { border: 1px   solid rgba(56,189,248,0.3);  animation-delay: 310ms; }
 
+        @keyframes btnShimmer { 0% { left: -75% } 100% { left: 125% } }
+        .btn-cool { position: relative !important; overflow: hidden !important; }
+        .btn-cool::after { content: ''; position: absolute; top: -50%; left: -75%; width: 50%; height: 200%; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%); pointer-events: none; }
+        .btn-cool:hover::after { animation: btnShimmer 0.65s ease forwards; }
+
         /* Mobile: collapse to left-side single column */
         @media (max-width: 640px) {
           .wf-row { grid-template-columns: 40px 1fr !important; }
@@ -325,8 +274,8 @@ export default function ServicesSection() {
       <section
         style={{
           height: "100vh",
-          background: "#0B0F19",
-          fontFamily: "'Sora', sans-serif",
+          background: colors.bg,
+          fontFamily: fonts.body,
           padding: "0 40px",
           position: "relative",
           overflow: "hidden",
@@ -363,7 +312,7 @@ export default function ServicesSection() {
               style={{
                 fontSize: 38,
                 fontWeight: 700,
-                fontFamily: "'Sora', sans-serif",
+                fontFamily: fonts.body,
                 background: "linear-gradient(135deg, #f1f5f9, #cbd5e1)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
@@ -372,7 +321,7 @@ export default function ServicesSection() {
             >
               What I Do
             </h2>
-            <div style={{ width: 40, height: 3, background: "linear-gradient(90deg, #38bdf8, #818cf8)", borderRadius: 2, margin: "0 auto" }} />
+            <div style={{ width: 40, height: 3, background: `linear-gradient(90deg, ${colors.sky}, ${colors.indigo})`, borderRadius: 2, margin: "0 auto" }} />
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28 }}>
@@ -380,6 +329,7 @@ export default function ServicesSection() {
               <ServiceCard key={service.title} service={service} index={i} />
             ))}
           </div>
+
         </div>
 
         {/* Scroll hint */}
@@ -388,27 +338,28 @@ export default function ServicesSection() {
             position: "absolute",
             bottom: 36,
             left: "50%",
+            zIndex: 1,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             gap: 8,
-            animation: "scrollBounce 2s ease-in-out infinite",
+            animation: "fadeInUp 1s ease 1.2s both",
+            opacity: 0.5,
           }}
         >
-          <span style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "#94a3b8", fontFamily: "'Sora', sans-serif" }}>
-            scroll
+          <span style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: "#5a6a84", fontFamily: fonts.body }}>
+            Scroll
           </span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 5v14M5 12l7 7 7-7" />
-          </svg>
+          <div style={{ width: 1, height: 44, background: `linear-gradient(to bottom, ${colors.sky}, transparent)` }} />
         </div>
       </section>
+
 
       {/* ══ SCREEN 2 — My Workflow ══ */}
       <section
         style={{
-          background: "#0B0F19",
-          fontFamily: "'Sora', sans-serif",
+          background: colors.bg,
+          fontFamily: fonts.body,
           padding: "120px 40px 100px",
           position: "relative",
           overflow: "hidden",
@@ -431,7 +382,7 @@ export default function ServicesSection() {
               style={{
                 fontSize: 30,
                 fontWeight: 700,
-                fontFamily: "'Sora', sans-serif",
+                fontFamily: fonts.body,
                 background: "linear-gradient(135deg, #f1f5f9, #cbd5e1)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
@@ -440,7 +391,7 @@ export default function ServicesSection() {
             >
               My Workflow
             </h2>
-            <div style={{ width: 40, height: 3, background: "linear-gradient(90deg, #38bdf8, #818cf8)", borderRadius: 2, margin: "0 auto" }} />
+            <div style={{ width: 40, height: 3, background: `linear-gradient(90deg, ${colors.sky}, ${colors.indigo})`, borderRadius: 2, margin: "0 auto" }} />
           </div>
 
           {/* Workflow timeline */}
@@ -474,7 +425,7 @@ export default function ServicesSection() {
                 top: 0,
                 width: 2,
                 height: wfFillPx,
-                background: "linear-gradient(to bottom, #38bdf8, #818cf8)",
+                background: `linear-gradient(to bottom, ${colors.sky}, ${colors.indigo})`,
                 borderRadius: 1,
                 transition: "height 0.06s linear",
                 boxShadow: wfFillPx > 0 ? "0 0 10px rgba(56,189,248,0.45)" : "none",
@@ -507,22 +458,24 @@ export default function ServicesSection() {
           >
             <Link
               to="/contact"
+              className="btn-cool"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 10,
                 padding: "14px 36px",
                 borderRadius: 100,
-                background: "linear-gradient(135deg, #38bdf8, #818cf8)",
-                color: "#0B0F19",
+                background: `linear-gradient(135deg, ${colors.sky}, ${colors.indigo})`,
+                color: colors.bg,
                 fontSize: 15,
                 fontWeight: 600,
-                fontFamily: "'Sora', sans-serif",
+                fontFamily: fonts.body,
                 textDecoration: "none",
                 letterSpacing: "0.02em",
-                transition: "all 0.35s ease",
-                boxShadow: "0 4px 20px rgba(56,189,248,0.25)",
+                transition: "all 0.35s cubic-bezier(0.22,1,0.36,1)",
               }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-5px) scale(1.04)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0) scale(1)"; }}
             >
               Let's Work Together
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
