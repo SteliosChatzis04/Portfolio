@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { LOGO_URL } from "../utils/logo-url.js";
+import { colors, fonts } from "../tokens.js";
 
 const NAV_LINKS = [
   ["Home",      "/"],
@@ -24,9 +25,9 @@ function Logo({ height = 40, onClick }) {
         opacity: hovered ? 0.75 : 1,
       }}
     >
-      <span style={{ fontFamily: "'Fira Code','SF Mono','Consolas',monospace", fontSize: bracketSize + "px", color: "#00e5ff", fontWeight: 300, opacity: 0.7, lineHeight: 1, marginTop: "2px" }}>&lt;</span>
+      <span style={{ fontFamily: fonts.mono, fontSize: bracketSize + "px", color: colors.accent, fontWeight: 300, opacity: 0.7, lineHeight: 1, marginTop: "2px" }}>&lt;</span>
       <img src={LOGO_URL} alt="Stelios Ch." style={{ height: height + "px" }} />
-      <span style={{ fontFamily: "'Fira Code','SF Mono','Consolas',monospace", fontSize: bracketSize + "px", color: "#00e5ff", fontWeight: 300, opacity: 0.7, lineHeight: 1, marginTop: "2px" }}>/&gt;</span>
+      <span style={{ fontFamily: fonts.mono, fontSize: bracketSize + "px", color: colors.accent, fontWeight: 300, opacity: 0.7, lineHeight: 1, marginTop: "2px" }}>/&gt;</span>
     </div>
   );
 }
@@ -35,7 +36,7 @@ function HamburgerIcon({ open }) {
   const bar = (transform, opacity = 1) => (
     <span style={{
       display: "block", width: "22px", height: "2px",
-      background: "#c0c8d8", borderRadius: "2px",
+      background: colors.textPrimary, borderRadius: "2px",
       transition: "all 0.3s ease",
       transform, opacity,
     }} />
@@ -77,8 +78,6 @@ export default function Navbar() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@300;400&display=swap');
-
         .nb-nav     { padding: 12px 48px !important; }
         .nb-desktop { display: flex !important; }
         .nb-burger  { display: none !important; }
@@ -91,17 +90,17 @@ export default function Navbar() {
 
         .nb-mob-btn {
           background: none; border: none;
-          color: #c0c8d8; font-family: 'Outfit', sans-serif;
+          color: ${colors.textPrimary}; font-family: ${fonts.body};
           font-size: 28px; font-weight: 500;
           cursor: pointer; letter-spacing: 0.5px;
           transition: color 0.2s; padding: 10px 0;
         }
-        .nb-mob-btn:hover, .nb-mob-btn.active { color: #00e5ff; }
+        .nb-mob-btn:hover, .nb-mob-btn.active { color: ${colors.accent}; }
 
         .nb-mob-resume {
           border: 1px solid rgba(0,229,255,0.4); border-radius: 8px;
-          background: none; color: #00e5ff;
-          font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 500;
+          background: none; color: ${colors.accent};
+          font-family: ${fonts.body}; font-size: 20px; font-weight: 500;
           cursor: pointer; padding: 10px 32px;
           transition: background 0.2s; margin-top: 12px;
         }
@@ -117,7 +116,7 @@ export default function Navbar() {
           background: scrolled ? "rgba(8,14,28,0.95)" : "transparent",
           backdropFilter: scrolled ? "blur(16px)" : "none",
           transition: "all 0.4s ease",
-          borderBottom: scrolled ? "1px solid rgba(0,229,255,0.08)" : "1px solid transparent",
+          borderBottom: scrolled ? `1px solid ${colors.border}` : "1px solid transparent",
         }}
       >
         <Logo height={40} onClick={() => handleNav("/")} />
@@ -135,18 +134,18 @@ export default function Navbar() {
                 onClick={() => handleNav(path)}
                 style={{
                   background: "none", border: "none",
-                  color: isActive ? "#00e5ff" : "#c0c8d8",
-                  fontFamily: "'Outfit', sans-serif", fontSize: "14px",
+                  color: isActive ? colors.accent : colors.textPrimary,
+                  fontFamily: fonts.body, fontSize: "14px",
                   fontWeight: isActive ? 600 : 400,
                   cursor: "pointer", letterSpacing: "0.5px",
                   transition: "color 0.3s", padding: "4px 0", position: "relative",
                 }}
-                onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = "#00e5ff"; }}
-                onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = "#c0c8d8"; }}
+                onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = colors.accent; }}
+                onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = colors.textPrimary; }}
               >
                 {label}
                 {isActive && (
-                  <span style={{ position: "absolute", bottom: "-2px", left: 0, right: 0, height: "2px", background: "#00e5ff", borderRadius: "1px" }} />
+                  <span style={{ position: "absolute", bottom: "-2px", left: 0, right: 0, height: "2px", background: colors.accent, borderRadius: "1px" }} />
                 )}
               </button>
             );
@@ -155,7 +154,7 @@ export default function Navbar() {
             onClick={() => handleNav("/resume")}
             style={{
               background: "none", border: "1px solid rgba(0,229,255,0.35)", borderRadius: "6px",
-              color: "#00e5ff", fontFamily: "'Outfit', sans-serif", fontSize: "14px",
+              color: colors.accent, fontFamily: fonts.body, fontSize: "14px",
               fontWeight: 500, cursor: "pointer", letterSpacing: "0.5px",
               padding: "4px 14px", transition: "all 0.3s",
             }}

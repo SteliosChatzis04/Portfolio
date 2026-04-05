@@ -1,4 +1,6 @@
-export default function Footer({ accent = "#00e5ff", accentEnd = "#00b8d4" }) {
+import { colors, fonts } from "../tokens.js";
+
+export default function Footer({ accent = colors.accent, accentEnd = colors.accentDim }) {
   const year = new Date().getFullYear();
   return (
     <footer
@@ -17,7 +19,7 @@ export default function Footer({ accent = "#00e5ff", accentEnd = "#00b8d4" }) {
     >
       <span
         style={{
-          fontFamily: "'Fira Code','SF Mono','Consolas',monospace",
+          fontFamily: fonts.mono,
           fontSize: "12px",
           color: accent,
           opacity: 0.5,
@@ -27,7 +29,7 @@ export default function Footer({ accent = "#00e5ff", accentEnd = "#00b8d4" }) {
       </span>
       <p
         style={{
-          fontFamily: "'Outfit', sans-serif",
+          fontFamily: fonts.body,
           fontSize: "13px",
           color: "#4a5670",
           margin: 0,
