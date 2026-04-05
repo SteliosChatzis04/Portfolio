@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer.jsx";
 import { stats as STATS, skills as SKILLS } from "../data/about.js";
+import { colors, fonts } from "../tokens.js";
 
 /* ════════════════════════════════════════════════════════════
    ABOUT SECTION — Stelios Chatzisavramidis Portfolio
@@ -61,31 +62,30 @@ function AboutImage() {
 }
 
 /* ── Animated counter ── */
-function Counter({ target, suffix = "" }) {
+function Counter({ target, suffix = "", start = false }) {
   const [val, setVal] = useState(0);
-  const ref = useRef(null);
   const started = useRef(false);
 
   useEffect(() => {
+    if (!start || started.current) return;
     const num = parseInt(target);
     if (isNaN(num)) { setVal(target); return; }
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting && !started.current) {
-        started.current = true;
-        let start = 0;
-        const step = Math.ceil(num / 40);
-        const iv = setInterval(() => {
-          start += step;
-          if (start >= num) { setVal(num); clearInterval(iv); }
-          else setVal(start);
-        }, 30);
-      }
-    }, { threshold: 0.3 });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, [target]);
+    started.current = true;
+    const from = 0;
+    let startTime = null;
+    const duration = 1600;
+    const tick = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const eased = 1 - Math.pow(2, -10 * progress);
+      setVal(Math.round(from + eased * (num - from)));
+      if (progress < 1) requestAnimationFrame(tick);
+      else setVal(num);
+    };
+    requestAnimationFrame(tick);
+  }, [start, target]);
 
-  return <span ref={ref}>{val}{suffix}</span>;
+  return <span>{val}{suffix}</span>;
 }
 
 /* ═══════════════════════════════════════════
@@ -108,21 +108,19 @@ export default function AboutSection() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
-
         .about-section {
-          --bg: #0B0F19;
+          --bg: ${colors.bg};
           --surface: #171B2D;
           --surface-border: rgba(255,255,255,0.06);
-          --accent: #7B5FFF;
+          --accent: ${colors.purple};
           --accent-glow: rgba(123,95,255,0.15);
-          --cyan: #00D4FF;
+          --cyan: ${colors.accent};
           --cyan-glow: rgba(0,212,255,0.15);
-          --text-primary: #E8E4F0;
-          --text-secondary: #9490A8;
+          --text-primary: ${colors.textPrimary};
+          --text-secondary: ${colors.textSecondary};
           --text-muted: #5E5A70;
           background: var(--bg);
-          font-family: 'Outfit', sans-serif;
+          font-family: ${fonts.body};
           color: var(--text-primary);
           padding: 100px 0 60px;
           position: relative;
@@ -337,19 +335,23 @@ export default function AboutSection() {
           transition: all 0.6s cubic-bezier(0.22,1,0.36,1) 0.8s;
         }
 
+        @keyframes btnShimmer { 0% { left: -75% } 100% { left: 125% } }
+        .about-cta { overflow: hidden !important; }
+        .about-cta::after { content: ''; position: absolute; top: -50%; left: -75%; width: 50%; height: 200%; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.22) 50%, transparent 60%); pointer-events: none; }
+        .about-cta:hover::after { animation: btnShimmer 0.65s ease forwards; }
+
         .about-cta:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 30px rgba(0,212,255,0.3), 0 0 0 4px rgba(0,212,255,0.1);
+          transform: translateY(-5px) scale(1.04);
         }
 
         .about-cta:active {
-          transform: translateY(0);
+          transform: translateY(0) scale(1);
         }
 
         /* ── Stats strip ── */
         .stats-strip {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(4, 1fr);
           gap: 24px;
           margin-top: 72px;
           padding-top: 48px;
@@ -376,6 +378,11 @@ export default function AboutSection() {
           transform: translateY(-4px);
         }
 
+        @keyframes statScale {
+          from { transform: scale(0); opacity: 0; }
+          to   { transform: scale(1); opacity: 1; }
+        }
+
         .stat-value {
           font-size: 36px;
           font-weight: 800;
@@ -385,7 +392,14 @@ export default function AboutSection() {
           background-clip: text;
           line-height: 1;
           margin-bottom: 8px;
+          transform: scale(0);
+          opacity: 0;
         }
+
+        .stats-strip.visible .stat-item:nth-child(1) .stat-value { animation: statScale 0.55s cubic-bezier(0.34,1.56,0.64,1) 0.95s forwards; }
+        .stats-strip.visible .stat-item:nth-child(2) .stat-value { animation: statScale 0.55s cubic-bezier(0.34,1.56,0.64,1) 1.10s forwards; }
+        .stats-strip.visible .stat-item:nth-child(3) .stat-value { animation: statScale 0.55s cubic-bezier(0.34,1.56,0.64,1) 1.25s forwards; }
+        .stats-strip.visible .stat-item:nth-child(4) .stat-value { animation: statScale 0.55s cubic-bezier(0.34,1.56,0.64,1) 1.40s forwards; }
 
         .stat-label {
           font-size: 13px;
@@ -414,7 +428,7 @@ export default function AboutSection() {
             margin: 0 auto;
           }
           .stats-strip {
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 16px;
           }
           .about-container { padding: 0 20px; }
@@ -437,15 +451,16 @@ export default function AboutSection() {
               </div>
 
               <h2 className={`about-heading ${visible ? "visible" : ""}`}>
-                Passionate about creating <em>intuitive digital experiences.</em>
+                Engineering software <em>with precision and purpose.</em>
               </h2>
 
               <p className={`about-body ${visible ? "visible" : ""}`}>
-                With a strong background in Computer Engineering and a passion for
-                aesthetics, I bridge the gap between complex code and intuitive design.
-                I focus on creating user-centric interfaces that solve real problems,
-                ensuring that every digital experience is not only functional but also
-                visually compelling.
+                I'm an Electrical and Computer Engineering student at the University
+                of Peloponnese, focused on backend systems and software architecture.
+                My academic path spans data structures, compilers, distributed systems,
+                and full-stack development — building the depth to approach software
+                problems with rigour and clarity. I favour spec-driven development and
+                clean architecture, and I build at every layer of the stack.
               </p>
 
               <div className={`skills-row ${visible ? "visible" : ""}`}>
@@ -483,7 +498,7 @@ export default function AboutSection() {
             {STATS.map((s) => (
               <div key={s.label} className="stat-item">
                 <div className="stat-value">
-                  <Counter target={s.value.replace("+", "")} suffix="+" />
+                  <Counter target={s.value.replace("+", "")} suffix="+" start={visible} />
                 </div>
                 <div className="stat-label">{s.label}</div>
               </div>
