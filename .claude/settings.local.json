@@ -4,7 +4,17 @@
       "Bash(node -e \":*)",
       "Bash(head -10 echo \"---\" grep -n \"All Rights\\\\|© 20\\\\|footer\\\\|Footer\" \"c:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/resume.jsx\")",
       "Bash(grep -l \"from \\\\\"../data/\" src/pages/*.jsx)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(npm install:*)",
+      "Bash(mkdir -p out)",
+      "Bash(npx remotion:*)",
+      "Bash(node -e \"const r = require\\('./node_modules/remotion/package.json'\\); console.log\\(r.version\\)\")",
+      "Bash(node_modules/.bin/remotion render:*)",
+      "Bash(grep -rn \"#[0-9a-fA-F]\\\\{3,6\\\\}\\\\|rgba\\(\" src/pages/ src/components/ --include=\"*.jsx\" --include=\"*.js\")",
+      "Bash(grep -rn \"#[0-9a-fA-F]\\\\{3,6\\\\}\\\\|rgba\\(\" src/pages/PortfolioPage.jsx src/pages/ResumePage.jsx src/pages/ServicesPage.jsx src/components/ --include=\"*.jsx\" --include=\"*.js\")",
+      "Bash(grep -rn \"#[0-9a-fA-F]\\\\{3,6\\\\}\\\\|rgba\\(\" src/components/Navbar.jsx src/components/Footer.jsx)",
+      "Bash(git -C \"c:/Users/steli/OneDrive/Desktop/The big boss/Portfolio\" diff 955f877..6b4d20d --stat)",
+      "Bash(git -C \"c:/Users/steli/OneDrive/Desktop/The big boss/Portfolio\" diff 955f877..6b4d20d -- src/index.css src/main.jsx index.html)"
     ]
   }
 }
