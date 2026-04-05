@@ -1,3 +1,4 @@
+import "./index.css";
 import { StrictMode, useState, useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
@@ -22,6 +23,7 @@ function AnimatedRoutes() {
       return;
     }
     setVisible(false);
+    window.scrollTo(0, 0);
     const t = setTimeout(() => {
       setShownLocation(location);
       requestAnimationFrame(() => setVisible(true));

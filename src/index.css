@@ -1,0 +1,45 @@
+/* ── Reset (index.html already handles html/body/root; this covers everything else) ── */
+* { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+::selection { background: rgba(0, 229, 255, 0.3); color: #fff; }
+input::placeholder,
+textarea::placeholder { color: #4a5670; }
+
+/* ── Keyframes ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes wordReveal {
+  from { opacity: 0; transform: translateY(22px); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+@keyframes blurFadeIn {
+  from { opacity: 0; filter: blur(8px); }
+  to   { opacity: 1; filter: blur(0); }
+}
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+@keyframes btnShimmer {
+  0%   { left: -75%; }
+  100% { left: 125%; }
+}
+
+/* ── Button shimmer (used on .btn-cool class) ── */
+.btn-cool { position: relative !important; overflow: hidden !important; }
+.btn-cool::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -75%;
+  width: 50%; height: 200%;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+.btn-cool:hover::after { animation: btnShimmer 0.65s ease forwards; }
