@@ -5,28 +5,28 @@
 // (these map to the SVG icon components already in ServicesPage.jsx)
 export const services = [
   {
-    title: "UI/UX Design",
+    title: "Interface Design",
     description:
-      "Crafting intuitive interfaces through user research, wireframing, and iterative prototyping — always grounded in real user needs.",
+      "Designing functional, clean interfaces informed by engineering judgment — using Figma and Axure as tools, not as the end goal.",
     icon: "design",
   },
   {
     title: "Web Development",
     description:
-      "Building responsive, performant websites with React, clean architecture, and modern tooling — from concept to deployment.",
+      "Building full-stack applications with a backend-first mindset — REST APIs, database design, server-side logic, and performant frontends with React.",
     icon: "code",
   },
   {
     title: "Prototyping",
     description:
-      "Creating high-fidelity interactive mockups in Axure RP and Figma to validate ideas and align stakeholders before development.",
+      "Translating requirements into structured, testable prototypes before implementation — reducing ambiguity and aligning expectations early in the process.",
     icon: "prototype",
   },
 ];
 
 export const workflow = [
-  { step: "Discover", detail: "Research users, audit competitors, define problems worth solving." },
-  { step: "Define",   detail: "Synthesize insights into clear goals, personas, and success metrics." },
-  { step: "Design",   detail: "Iterate from wireframes to polished UI with continuous user feedback." },
-  { step: "Deliver",  detail: "Build, test, and ship — then measure, learn, and refine." },
+  { step: "Analyse",    detail: "Break down requirements into clear technical constraints, data flows, and system boundaries. I favour spec-driven development and structured spec tooling to define behaviour precisely before implementation begins." },
+  { step: "Architect",  detail: "Design data models, API contracts, and service structure built to carry the product through growth, not just launch." },
+  { step: "Implement",  detail: "Build from the backend up — business logic, database layer, REST APIs, and a clean frontend layer on top." },
+  { step: "Deliver",    detail: "Test, deploy, and refine. Ship software that holds up under real conditions, then improve based on what the data shows." },
 ];

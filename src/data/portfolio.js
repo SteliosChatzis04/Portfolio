@@ -5,7 +5,7 @@
 //   id         unique number
 //   title      project name
 //   tags       array of label strings shown as chips
-//   category   "web" | "mobile" | "branding"  (used by the filter)
+//   category   "web" | "data" | "systems"  (used by the filter)
 //   color      hex accent color for the icon ring
 //   icon       "chart" | "store" | "map" | "brand" | "zen" | "home"
 //   description  one-paragraph summary
@@ -19,116 +19,78 @@
 export const projects = [
   {
     id: 1,
-    title: "FinTech Dashboard App",
-    tags: ["UI Design", "React"],
-    category: "web",
-    color: "#38bdf8",
+    title: "LoL Insights & Analytics Tool",
+    tags: ["Python", "React", "Riot API"],
+    category: "data",
+    color: "#818cf8",
     icon: "chart",
     description:
-      "A comprehensive financial analytics dashboard built with React, featuring real-time data visualization, portfolio tracking, and AI-driven market insights.",
-    role: "Lead UI Designer & Front-End Developer",
-    duration: "3 months",
-    tools: ["React", "D3.js", "Figma", "TailwindCSS"],
+      "A full-stack analytics application leveraging the Riot Games API to provide advanced player performance metrics and match outcome predictions through interactive data visualisation.",
+    role: "Full-Stack Developer",
+    duration: "Ongoing",
+    tools: ["Python", "React", "Riot Games API"],
     challenge:
-      "Financial data is inherently complex. The challenge was distilling dense market analytics into intuitive, glanceable views that both novice investors and seasoned traders could navigate with confidence.",
+      "Processing and presenting large volumes of match data in a way that surfaces meaningful insights — not just raw statistics that overwhelm the user.",
     solution:
-      "I designed a modular card-based system with progressive disclosure — surface-level KPIs expand into detailed charts on demand. A custom dark theme reduces eye strain during extended trading sessions, while color-coded indicators provide instant sentiment cues.",
+      "Built a Python backend to handle API data ingestion and processing, paired with a React frontend featuring custom visualisation components for trend analysis and match prediction.",
     outcome:
-      "The dashboard increased user engagement by 40% and reduced the average time-to-insight from 12 minutes to under 3 minutes during beta testing.",
+      "Working analytics pipeline with a live visualisation layer for tracking player performance trends and predicting match outcomes based on historical data.",
   },
   {
     id: 2,
-    title: "Urban Streetwear",
-    tags: ["Web Design", "E-Commerce"],
-    category: "web",
-    color: "#f472b6",
-    icon: "store",
+    title: "Custom Language Compiler",
+    tags: ["C", "Flex", "Bison"],
+    category: "systems",
+    color: "#34d399",
+    icon: "brand",
     description:
-      "A high-end e-commerce platform for an urban streetwear brand, blending editorial photography with seamless shopping experiences.",
-    role: "Web Designer & UX Strategist",
-    duration: "2 months",
-    tools: ["Figma", "Shopify", "GSAP", "Liquid"],
+      "A compiler for a custom programming language, covering the full pipeline from lexical analysis and syntax parsing to semantic analysis and code generation.",
+    role: "Systems Engineer",
+    duration: "Academic project",
+    tools: ["C", "Flex", "Bison"],
     challenge:
-      "The brand needed a digital storefront that captured the raw energy of street culture while maintaining the polish expected of a premium fashion label.",
+      "Designing a language grammar and implementing a complete compilation pipeline from scratch — balancing correctness, performance, and clean code generation.",
     solution:
-      "I crafted an editorial-style layout with full-bleed imagery, bold typography, and micro-interactions that echo the kinetic energy of urban environments.",
+      "Implemented lexical analysis with Flex, syntax parsing with Bison, and semantic analysis in C. Focused on efficient code generation and optimisation techniques to ensure fast execution.",
     outcome:
-      "The redesign resulted in a 55% increase in average session duration and a 28% uplift in conversion rate within the first quarter post-launch.",
+      "Successfully compiled and executed programs written in the custom language, demonstrating correct handling of the full compilation pipeline from source to output.",
   },
   {
     id: 3,
-    title: "Wanderlust App",
-    tags: ["Mobile App", "UX Research"],
-    category: "mobile",
-    color: "#818cf8",
-    icon: "map",
+    title: "Digital Archive Platform",
+    tags: ["HTML/CSS", "JavaScript", "Full-Stack"],
+    category: "web",
+    color: "#38bdf8",
+    icon: "store",
     description:
-      "A travel companion mobile app combining intelligent route planning with community-sourced local insights for authentic travel experiences.",
-    role: "UX Researcher & Mobile Designer",
-    duration: "4 months",
-    tools: ["Figma", "Maze", "Miro", "Protopie"],
+      "A comprehensive digital repository for archiving and categorising large-scale media and documentation, with efficient data indexing and a clean navigation interface.",
+    role: "Full-Stack Developer",
+    duration: "2 months",
+    tools: ["HTML", "CSS", "JavaScript"],
     challenge:
-      "Travelers are overwhelmed by fragmented tools. We needed to unify maps, reviews, bookings, and itineraries into one cohesive experience.",
+      "Building a system capable of handling large-scale media archives while keeping navigation fast and accessible for non-technical users.",
     solution:
-      "Through extensive user research (40+ interviews, diary studies), I designed a context-aware interface that surfaces relevant features based on the traveler's current phase.",
+      "Designed a structured indexing system with a clean interface for browsing historical records. Focused on efficient data categorisation and fast retrieval across large datasets.",
     outcome:
-      "User testing showed a 92% task completion rate for itinerary creation. The app achieved a 4.7-star rating within 3 months of soft launch.",
+      "Delivered a fully functional archive platform with seamless navigation through large media collections and a user-friendly interface for non-technical operators.",
   },
   {
     id: 4,
-    title: "EcoBurger Brand",
-    tags: ["Branding", "Web Dev"],
-    category: "branding",
-    color: "#fbbf24",
-    icon: "brand",
-    description:
-      "Complete brand identity and web presence for a sustainable fast-food chain, from logo design to a fully responsive marketing site.",
-    role: "Brand Designer & Web Developer",
-    duration: "2.5 months",
-    tools: ["Illustrator", "Photoshop", "HTML/CSS", "WordPress"],
-    challenge:
-      "EcoBurger needed to stand out in the crowded fast-food market while authentically communicating its commitment to sustainability.",
-    solution:
-      "I developed a brand identity that juxtaposes bold, appetite-driven visuals with earthy, organic textures and a playful scroll-driven storytelling approach.",
-    outcome:
-      "Brand awareness increased 60% in the target demographic within 6 months. The website's bounce rate dropped to 22%, well below the industry average.",
-  },
-  {
-    id: 5,
-    title: "ZenMind Yoga",
-    tags: ["Mobile App", "Prototyping"],
-    category: "mobile",
-    color: "#34d399",
-    icon: "zen",
-    description:
-      "A mindfulness and yoga app with guided sessions, progress tracking, and a serene, distraction-free interface for daily wellness.",
-    role: "Mobile App Designer & Prototyper",
-    duration: "3 months",
-    tools: ["Figma", "Protopie", "After Effects", "Lottie"],
-    challenge:
-      "Wellness apps often feel clinical or overwhelming. The goal was to create a calming digital sanctuary without gamification pressure.",
-    solution:
-      "I designed a breathing-rhythm-based UI where elements gently pulse in sync with guided breathing. The onboarding adapts to experience level.",
-    outcome:
-      "The prototype scored 94/100 on usability testing. Daily active retention improved 35% compared to the previous app version.",
-  },
-  {
-    id: 6,
-    title: "SmartHome Hub",
-    tags: ["UI Design", "IoT"],
+    title: "Personal Portfolio",
+    tags: ["React", "JavaScript"],
     category: "web",
-    color: "#a78bfa",
+    color: "#f472b6",
     icon: "home",
     description:
-      "A centralized smart home control interface unifying IoT devices into an intuitive, room-based dashboard with automation workflows.",
-    role: "UI/UX Designer",
-    duration: "3.5 months",
-    tools: ["Figma", "React", "Node.js", "MQTT"],
+      "A responsive single-page portfolio application built with React, featuring animated UI components, an interactive particle canvas, and a data-driven multi-page architecture.",
+    role: "Full-Stack Developer",
+    duration: "Ongoing",
+    tools: ["React", "JavaScript", "CSS"],
     challenge:
-      "Smart home ecosystems are fragmented. The challenge was creating a single pane of glass that's simple yet powerful for advanced automation.",
+      "Building a portfolio that reflects both technical depth and design sensibility — performant, animated, and easy to maintain as projects evolve.",
     solution:
-      "I designed a spatial interface organized by rooms with a visual floor plan as primary navigation and a drag-and-drop automation builder.",
+      "Architected a component-based React application with a clean data-driven structure separating content from presentation, scroll-triggered animations, and an interactive particle canvas background.",
     outcome:
-      "Beta users reported 70% fewer app switches per day. The automation builder's completion rate hit 88%.",
+      "A live, deployed portfolio serving as a central hub for professional identity — fully maintainable through a set of structured data files without touching component code.",
   },
 ];

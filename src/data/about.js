@@ -3,17 +3,18 @@
 
 // Counter stats displayed at the top of the About page
 export const stats = [
+  { value: "5+",  label: "Projects Built" },
   { value: "3+",  label: "Years Experience" },
-  { value: "15+", label: "Projects Completed" },
-  { value: "10+", label: "Happy Clients" },
+  { value: "10+", label: "Technologies" },
+  { value: "5+",  label: "Databases" },
 ];
 
 // Skills shown with icons — only edit the `name` field freely.
 // The `icon` field is an SVG path string used to render the icon shape.
 export const skills = [
-  { name: "Axure",      icon: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" },
+  { name: "Java",       icon: "M8 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2M16 3h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2M12 8v8M9 11h6" },
   { name: "React",      icon: "M12 12m-2 0a2 2 0 1 0 4 0 2 2 0 1 0-4 0M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2" },
-  { name: "HTML5/CSS3", icon: "M4 3l1.5 17L12 22l6.5-2L20 3H4zm3.5 4h9l-.3 3H8.2l.2 3h7.8l-.5 5.5L12 19.5l-3.7-1L8 14h2.5l.2 2 1.3.4 1.3-.4.2-2H8.5" },
+  { name: "SQL",        icon: "M12 2C6.48 2 2 4.24 2 7s4.48 5 10 5 10-2.24 10-5-4.48-5-10-5zM2 17c0 2.76 4.48 5 10 5s10-2.24 10-5M2 12c0 2.76 4.48 5 10 5s10-2.24 10-5M2 7v10" },
   { name: "Node.js",    icon: "M12 2L3 7v10l9 5 9-5V7l-9-5zm0 4v12M3 7l9 5 9-5" },
   { name: "JavaScript", icon: "M3 3h18v18H3V3zm9.5 14c0 1.1-.9 2-2 2H9v-1.5h1.5c.3 0 .5-.2.5-.5v-4h1.5v4zm5-1c0 1.1-.9 2-2 2h-2v-1.5h2c.3 0 .5-.2.5-.5s-.2-.5-.5-.5h-1c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5h2V14h-2c-.3 0-.5.2-.5.5s.2.5.5.5h1c.8 0 1.5.7 1.5 1.5" },
   { name: "C",          icon: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1 5h2v3h3v2h-3v3h-2v-3H8v-2h3V7z" },
