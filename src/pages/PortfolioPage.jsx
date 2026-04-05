@@ -1,74 +1,15 @@
 import { useState, useEffect, useRef } from "react";
+import { ICON_PATHS } from "../icons.jsx";
+import { colors, fonts } from "../tokens.js";
 import Footer from "../components/Footer.jsx";
 import { projects as PROJECTS } from "../data/portfolio.js";
 
-/* ════════════════════════════════════════════════════
-   DESIGN TOKENS — matching homepage, resume, services
-   ════════════════════════════════════════════════════ */
-const T = {
-  bg: "#0B0F19",
-  surface: "#111827",
-  cardBg: "rgba(56, 189, 248, 0.04)",
-  cardBorder: "rgba(56, 189, 248, 0.10)",
-  cardBorderHover: "rgba(56, 189, 248, 0.25)",
-  accent1: "#38bdf8",   // cyan
-  accent2: "#818cf8",   // indigo
-  textPrimary: "#f1f5f9",
-  textSecondary: "#94a3b8",
-  textMuted: "#64748b",
-  font: "'Sora', sans-serif",
-  radius: 16,
-};
-
 const CATEGORIES = [
-  { key: "all", label: "All" },
-  { key: "web", label: "Web Design" },
-  { key: "mobile", label: "Mobile Apps" },
-  { key: "branding", label: "Branding" },
+  { key: "all",     label: "All" },
+  { key: "web",     label: "Web Apps" },
+  { key: "data",    label: "Data & Analytics" },
+  { key: "systems", label: "Systems" },
 ];
-
-/* ── SVG icon paths per project type ── */
-const ICON_PATHS = {
-  chart: (
-    <>
-      <polyline points="4,18 8,12 12,15 16,8 20,11" fill="none" strokeWidth="1.5" />
-      <line x1="4" y1="20" x2="20" y2="20" strokeWidth="1" opacity="0.4" />
-      <line x1="4" y1="4" x2="4" y2="20" strokeWidth="1" opacity="0.4" />
-    </>
-  ),
-  store: (
-    <>
-      <rect x="4" y="10" width="16" height="10" rx="1" fill="none" strokeWidth="1.5" />
-      <path d="M4 10 L6 4 L18 4 L20 10" fill="none" strokeWidth="1.5" />
-      <line x1="12" y1="14" x2="12" y2="20" strokeWidth="1" opacity="0.5" />
-    </>
-  ),
-  map: (
-    <>
-      <path d="M12 2 C8 7 4 12 12 20 C20 12 16 7 12 2 Z" fill="none" strokeWidth="1.5" />
-      <circle cx="12" cy="10" r="2" fill="none" strokeWidth="1.5" />
-    </>
-  ),
-  brand: (
-    <>
-      <circle cx="12" cy="12" r="8" fill="none" strokeWidth="1.5" />
-      <path d="M8 12 L10 15 L16 9" fill="none" strokeWidth="1.5" />
-    </>
-  ),
-  zen: (
-    <>
-      <circle cx="12" cy="12" r="8" fill="none" strokeWidth="1.5" />
-      <path d="M12 8 C9 10 9 14 12 16 C15 14 15 10 12 8 Z" fill="none" strokeWidth="1.2" />
-    </>
-  ),
-  home: (
-    <>
-      <path d="M4 11 L12 4 L20 11" fill="none" strokeWidth="1.5" />
-      <rect x="6" y="11" width="12" height="9" rx="1" fill="none" strokeWidth="1.5" />
-      <rect x="10" y="15" width="4" height="5" fill="none" strokeWidth="1" />
-    </>
-  ),
-};
 
 /* ── Placeholder thumbnail with inline SVG ── */
 function Thumbnail({ project, large }) {
@@ -81,7 +22,7 @@ function Thumbnail({ project, large }) {
         borderRadius: large ? 14 : 10,
         overflow: "hidden",
         position: "relative",
-        background: T.bg,
+        background: colors.bg,
       }}
     >
       <svg
@@ -94,11 +35,11 @@ function Thumbnail({ project, large }) {
         <defs>
           <radialGradient id={`rg-${project.id}${large ? "L" : ""}`} cx="50%" cy="40%" r="50%">
             <stop offset="0%" stopColor={project.color} stopOpacity="0.18" />
-            <stop offset="100%" stopColor={T.bg} stopOpacity="1" />
+            <stop offset="100%" stopColor={colors.bg} stopOpacity="1" />
           </radialGradient>
           <linearGradient id={`lg-${project.id}${large ? "L" : ""}`} x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stopColor={project.color} stopOpacity="0.06" />
-            <stop offset="100%" stopColor={T.accent2} stopOpacity="0.04" />
+            <stop offset="100%" stopColor={colors.indigo} stopOpacity="0.04" />
           </linearGradient>
         </defs>
 
@@ -132,7 +73,7 @@ function Thumbnail({ project, large }) {
           fontSize: 9,
           letterSpacing: ".08em",
           color: `${project.color}40`,
-          fontFamily: T.font,
+          fontFamily: fonts.body,
           textTransform: "uppercase",
         }}
       >
@@ -187,17 +128,17 @@ function CaseStudy({ project, onBack }) {
           gap: 8,
           background: "none",
           border: "none",
-          color: T.accent1,
+          color: colors.sky,
           cursor: "pointer",
-          fontFamily: T.font,
+          fontFamily: fonts.body,
           fontSize: 14,
           fontWeight: 500,
           padding: "4px 0",
           marginBottom: 32,
           transition: "opacity .2s",
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
-        onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+        onMouseEnter={(e) => { e.currentTarget.style.transform = "translateX(-4px)"; e.currentTarget.style.opacity = "0.85"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.transform = "translateX(0)"; e.currentTarget.style.opacity = "1"; }}
       >
         <ArrowLeft /> Back to Projects
       </button>
@@ -205,7 +146,7 @@ function CaseStudy({ project, onBack }) {
       {/* Hero */}
       <div
         style={{
-          borderRadius: T.radius,
+          borderRadius: 16,
           overflow: "hidden",
           marginBottom: 40,
           border: `1px solid ${project.color}20`,
@@ -217,10 +158,10 @@ function CaseStudy({ project, onBack }) {
       {/* Title */}
       <h1
         style={{
-          fontFamily: T.font,
+          fontFamily: fonts.body,
           fontSize: "clamp(26px, 4vw, 42px)",
           fontWeight: 700,
-          background: `linear-gradient(135deg, ${T.textPrimary}, ${T.textSecondary})`,
+          background: `linear-gradient(135deg, ${colors.textPrimary}, ${colors.textSecondary})`,
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           margin: "0 0 14px",
@@ -242,7 +183,7 @@ function CaseStudy({ project, onBack }) {
               color: project.color,
               fontSize: 12,
               fontWeight: 500,
-              fontFamily: T.font,
+              fontFamily: fonts.body,
             }}
           >
             {t}
@@ -269,8 +210,8 @@ function CaseStudy({ project, onBack }) {
             style={{
               padding: "20px 22px",
               borderRadius: 12,
-              background: T.cardBg,
-              border: `1px solid ${T.cardBorder}`,
+              background: "rgba(56,189,248,0.04)",
+              border: `1px solid ${"rgba(56,189,248,0.10)"}`,
               backdropFilter: "blur(12px)",
             }}
           >
@@ -279,10 +220,10 @@ function CaseStudy({ project, onBack }) {
                 fontSize: 10,
                 textTransform: "uppercase",
                 letterSpacing: ".1em",
-                color: T.accent1,
+                color: colors.sky,
                 fontWeight: 700,
                 marginBottom: 8,
-                fontFamily: T.font,
+                fontFamily: fonts.body,
               }}
             >
               {item.label}
@@ -290,9 +231,9 @@ function CaseStudy({ project, onBack }) {
             <div
               style={{
                 fontSize: 13,
-                color: T.textSecondary,
+                color: colors.textSecondary,
                 lineHeight: 1.55,
-                fontFamily: T.font,
+                fontFamily: fonts.body,
               }}
             >
               {item.value}
@@ -306,8 +247,8 @@ function CaseStudy({ project, onBack }) {
         style={{
           fontSize: 17,
           lineHeight: 1.8,
-          color: T.textSecondary,
-          fontFamily: T.font,
+          color: colors.textSecondary,
+          fontFamily: fonts.body,
           maxWidth: 700,
           marginBottom: 52,
         }}
@@ -320,10 +261,10 @@ function CaseStudy({ project, onBack }) {
         <div key={s.num} style={{ marginBottom: 44 }}>
           <h2
             style={{
-              fontFamily: T.font,
+              fontFamily: fonts.body,
               fontSize: 21,
               fontWeight: 600,
-              color: T.textPrimary,
+              color: colors.textPrimary,
               marginBottom: 14,
               display: "flex",
               alignItems: "center",
@@ -338,12 +279,12 @@ function CaseStudy({ project, onBack }) {
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
-                background: `linear-gradient(135deg, ${T.accent1}18, ${T.accent2}18)`,
-                color: T.accent1,
+                background: `linear-gradient(135deg, ${colors.sky}18, ${colors.indigo}18)`,
+                color: colors.sky,
                 fontSize: 13,
                 fontWeight: 700,
-                fontFamily: T.font,
-                border: `1px solid ${T.accent1}15`,
+                fontFamily: fonts.body,
+                border: `1px solid ${colors.sky}15`,
               }}
             >
               {s.num}
@@ -354,8 +295,8 @@ function CaseStudy({ project, onBack }) {
             style={{
               fontSize: 15,
               lineHeight: 1.85,
-              color: T.textSecondary,
-              fontFamily: T.font,
+              color: colors.textSecondary,
+              fontFamily: fonts.body,
               maxWidth: 660,
               paddingLeft: 48,
             }}
@@ -415,9 +356,9 @@ export default function PortfolioSection() {
     return (
       <div
         style={{
-          background: T.bg,
+          background: colors.bg,
           minHeight: "100vh",
-          fontFamily: T.font,
+          fontFamily: fonts.body,
           padding: "clamp(24px, 5vw, 60px)",
         }}
       >
@@ -434,13 +375,17 @@ export default function PortfolioSection() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        @keyframes btnShimmer { 0% { left: -75% } 100% { left: 125% } }
+        .btn-cool { position: relative !important; overflow: hidden !important; }
+        .btn-cool::after { content: ''; position: absolute; top: -50%; left: -75%; width: 50%; height: 200%; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%); pointer-events: none; }
+        .btn-cool:hover::after { animation: btnShimmer 0.65s ease forwards; }
       `}</style>
 
       <section
         style={{
-          background: T.bg,
+          background: colors.bg,
           minHeight: "100vh",
-          fontFamily: T.font,
+          fontFamily: fonts.body,
           padding: "clamp(80px, 8vw, 100px) clamp(20px, 5vw, 60px)",
           position: "relative",
           overflow: "hidden",
@@ -455,7 +400,7 @@ export default function PortfolioSection() {
             transform: "translateX(-50%)",
             width: 700,
             height: 700,
-            background: `radial-gradient(circle, ${T.accent1}06 0%, transparent 70%)`,
+            background: `radial-gradient(circle, ${colors.sky}06 0%, transparent 70%)`,
             pointerEvents: "none",
           }}
         />
@@ -467,8 +412,8 @@ export default function PortfolioSection() {
               style={{
                 fontSize: "clamp(30px, 5vw, 46px)",
                 fontWeight: 700,
-                fontFamily: T.font,
-                background: `linear-gradient(135deg, ${T.textPrimary}, ${T.textSecondary})`,
+                fontFamily: fonts.body,
+                background: `linear-gradient(135deg, ${colors.textPrimary}, ${colors.textSecondary})`,
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 marginBottom: 12,
@@ -480,7 +425,7 @@ export default function PortfolioSection() {
               style={{
                 width: 40,
                 height: 3,
-                background: `linear-gradient(90deg, ${T.accent1}, ${T.accent2})`,
+                background: `linear-gradient(90deg, ${colors.sky}, ${colors.indigo})`,
                 borderRadius: 2,
                 margin: "0 auto 36px",
               }}
@@ -502,24 +447,27 @@ export default function PortfolioSection() {
               return (
                 <button
                   key={cat.key}
+                  className="btn-cool"
                   onClick={() => switchCategory(cat.key)}
                   style={{
                     padding: "9px 24px",
                     borderRadius: 100,
                     border: isActive
-                      ? `1px solid ${T.accent1}`
+                      ? `1px solid ${colors.sky}`
                       : `1px solid rgba(148, 163, 184, 0.15)`,
                     background: isActive
-                      ? `linear-gradient(135deg, ${T.accent1}15, ${T.accent2}10)`
+                      ? `linear-gradient(135deg, ${colors.sky}15, ${colors.indigo}10)`
                       : "transparent",
-                    color: isActive ? T.accent1 : T.textMuted,
+                    color: isActive ? colors.sky : colors.textMuted,
                     cursor: "pointer",
-                    fontFamily: T.font,
+                    fontFamily: fonts.body,
                     fontSize: 13,
                     fontWeight: isActive ? 600 : 400,
-                    transition: "all .3s ease",
+                    transition: "all .35s cubic-bezier(0.22,1,0.36,1)",
                     letterSpacing: ".02em",
                   }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px) scale(1.05)"; if (!isActive) { e.currentTarget.style.borderColor = `rgba(56,189,248,0.4)`; e.currentTarget.style.color = colors.sky; } }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0) scale(1)"; if (!isActive) { e.currentTarget.style.borderColor = "rgba(148,163,184,0.15)"; e.currentTarget.style.color = colors.textMuted; } }}
                 >
                   {cat.label}
                 </button>
@@ -546,11 +494,11 @@ export default function PortfolioSection() {
                   onMouseEnter={() => setHovered(project.id)}
                   onMouseLeave={() => setHovered(null)}
                   style={{
-                    borderRadius: T.radius,
+                    borderRadius: 16,
                     overflow: "hidden",
-                    background: T.cardBg,
+                    background: "rgba(56,189,248,0.04)",
                     backdropFilter: "blur(12px)",
-                    border: `1px solid ${isH ? T.cardBorderHover : T.cardBorder}`,
+                    border: `1px solid ${isH ? "rgba(56,189,248,0.25)" : "rgba(56,189,248,0.10)"}`,
                     cursor: "pointer",
                     transition: "all .4s cubic-bezier(.22,1,.36,1)",
                     transform: isH ? "translateY(-6px)" : "translateY(0)",
@@ -572,7 +520,7 @@ export default function PortfolioSection() {
                         position: "absolute",
                         inset: 0,
                         borderRadius: 10,
-                        background: `linear-gradient(135deg, ${project.color}CC, ${T.bg}DD)`,
+                        background: `linear-gradient(135deg, ${project.color}CC, ${colors.bg}DD)`,
                         opacity: isH ? 1 : 0,
                         transition: "opacity .35s ease",
                         display: "flex",
@@ -591,7 +539,7 @@ export default function PortfolioSection() {
                           color: "#fff",
                           fontSize: 13,
                           fontWeight: 500,
-                          fontFamily: T.font,
+                          fontFamily: fonts.body,
                           backdropFilter: "blur(6px)",
                         }}
                       >
@@ -606,8 +554,8 @@ export default function PortfolioSection() {
                       style={{
                         fontSize: 16,
                         fontWeight: 600,
-                        color: T.textPrimary,
-                        fontFamily: T.font,
+                        color: colors.textPrimary,
+                        fontFamily: fonts.body,
                         marginBottom: 8,
                       }}
                     >
@@ -616,8 +564,8 @@ export default function PortfolioSection() {
                     <p
                       style={{
                         fontSize: 12,
-                        color: T.textMuted,
-                        fontFamily: T.font,
+                        color: colors.textMuted,
+                        fontFamily: fonts.body,
                         letterSpacing: ".02em",
                       }}
                     >
