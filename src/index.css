@@ -1,5 +1,7 @@
-/* ── Reset (index.html already handles html/body/root; this covers everything else) ── */
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; padding: 0; }
+html, body, #root { background: #080e1c; min-height: 100vh; }
 html { scroll-behavior: smooth; }
 ::selection { background: rgba(0, 229, 255, 0.3); color: #fff; }
 input::placeholder,
