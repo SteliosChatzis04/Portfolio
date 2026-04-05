@@ -37,7 +37,7 @@ export default function Home() {
           <TypewriterGreeting />
           <AnimatedHeroTitle />
           <p style={{
-            fontSize: "clamp(15px,1.4vw,19px)", color: "#6a7a94", lineHeight: 1.75,
+            fontSize: "clamp(15px,1.4vw,19px)", color: colors.textSecondary, lineHeight: 1.75,
             maxWidth: "580px", margin: "0 auto 48px",
             animation: "blurFadeIn 1s ease 1.6s both",
           }}>
@@ -53,11 +53,7 @@ export default function Home() {
         </div>
 
         {/* Scroll indicator */}
-        <div style={{
-          position: "absolute", bottom: "36px", left: "50%", transform: "translateX(-50%)",
-          zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "8px",
-          animation: "fadeInUp 1s ease 1.2s both", opacity: 0.5,
-        }}>
+        <div style={{ position: "absolute", bottom: "36px", left: "50%", transform: "translateX(-50%)", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", animation: "fadeInUp 1s ease 1.2s both", opacity: 0.5 }}>
           <span style={{ fontSize: "11px", letterSpacing: "3px", textTransform: "uppercase", color: colors.textMuted }}>Scroll</span>
           <div style={{ width: "1px", height: "44px", background: `linear-gradient(to bottom, ${colors.accent}, transparent)` }} />
         </div>
@@ -91,16 +87,9 @@ export default function Home() {
         </AnimatedSection>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: "52px", alignItems: "center" }}>
           <AnimatedSection delay={0.1} direction="left">
-            <div style={{
-              borderRadius: "12px", overflow: "hidden",
-              border: `1px solid ${colors.border}`, aspectRatio: "4/3",
-              background: "linear-gradient(135deg,#0d1b2a 0%,#1b2838 50%,#2a3a4a 100%)",
-              display: "flex", alignItems: "center", justifyContent: "center", position: "relative",
-            }}>
+            <div style={{ borderRadius: "12px", overflow: "hidden", border: `1px solid ${colors.border}`, aspectRatio: "4/3", background: "linear-gradient(135deg,#0d1b2a 0%,#1b2838 50%,#2a3a4a 100%)", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
               <div style={{ fontSize: "48px", opacity: 0.25 }}>📸</div>
-              <div style={{ position: "absolute", bottom: "12px", right: "12px", fontSize: "11px", color: colors.textMuted, fontStyle: "italic" }}>
-                Your photo here
-              </div>
+              <div style={{ position: "absolute", bottom: "12px", right: "12px", fontSize: "11px", color: colors.textMuted, fontStyle: "italic" }}>Your photo here</div>
             </div>
           </AnimatedSection>
           <AnimatedSection delay={0.25} direction="right">
