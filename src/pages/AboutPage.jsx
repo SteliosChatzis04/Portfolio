@@ -316,7 +316,7 @@ export default function AboutSection() {
           padding: 14px 32px;
           border-radius: 100px;
           background: linear-gradient(135deg, var(--cyan), #0099CC);
-          color: #0B0F19;
+          color: ${colors.bg};
           font-size: 15px;
           font-weight: 600;
           font-family: 'Outfit', sans-serif;

@@ -107,7 +107,6 @@ export default function ContactSection() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         ::placeholder { color: rgba(148,163,184,0.5); font-family: 'Sora', sans-serif; }
         textarea::-webkit-scrollbar { width: 6px; }
