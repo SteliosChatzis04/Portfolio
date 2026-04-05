@@ -31,7 +31,7 @@ export default function Footer({ accent = colors.accent, accentEnd = colors.acce
         style={{
           fontFamily: fonts.body,
           fontSize: "13px",
-          color: "#4a5670",
+          color: colors.textMuted,
           margin: 0,
           letterSpacing: "0.3px",
         }}
