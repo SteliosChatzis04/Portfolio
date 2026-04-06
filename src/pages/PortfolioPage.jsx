@@ -191,6 +191,41 @@ function CaseStudy({ project, onBack }) {
         ))}
       </div>
 
+      {project.link && (
+        <div style={{ marginBottom: 32 }}>
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "9px 22px",
+              borderRadius: 100,
+              border: `1px solid ${colors.sky}40`,
+              background: `${colors.sky}10`,
+              color: colors.sky,
+              fontSize: 13,
+              fontWeight: 500,
+              fontFamily: fonts.body,
+              textDecoration: "none",
+              transition: "all .2s ease",
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = `${colors.sky}20`;
+              e.currentTarget.style.borderColor = colors.sky;
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = `${colors.sky}10`;
+              e.currentTarget.style.borderColor = `${colors.sky}40`;
+            }}
+          >
+            ↗ View Live Site
+          </a>
+        </div>
+      )}
+
       {/* Meta */}
       <div
         style={{
