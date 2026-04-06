@@ -57,22 +57,23 @@ export const projects = [
   },
   {
     id: 3,
-    title: "Digital Archive Platform",
-    tags: ["HTML/CSS", "JavaScript", "Full-Stack"],
+    title: "Gaza Digital Archive",
+    tags: ["HTML", "CSS", "JavaScript"],
     category: "web",
     color: "#38bdf8",
     icon: "store",
     description:
-      "A comprehensive digital repository for archiving and categorising large-scale media and documentation, with efficient data indexing and a clean navigation interface.",
-    role: "Full-Stack Developer",
-    duration: "2 months",
+      "A static frontend archive documenting the ongoing conflict in Gaza — built as a Web Development 1 academic project using pure HTML, CSS, and JavaScript. The site organises media, testimonies, and contextual data into a navigable, respectful interface without any backend or framework.",
+    role: "Frontend Developer",
+    duration: "Academic project — Web Dev 1",
     tools: ["HTML", "CSS", "JavaScript"],
     challenge:
-      "Building a system capable of handling large-scale media archives while keeping navigation fast and accessible for non-technical users.",
+      "Presenting sensitive, large-scale documentary content in a way that is navigable and emotionally considered — without a database, CMS, or backend to manage the data.",
     solution:
-      "Designed a structured indexing system with a clean interface for browsing historical records. Focused on efficient data categorisation and fast retrieval across large datasets.",
+      "Structured all content as static HTML with a hand-crafted CSS layout and vanilla JavaScript for navigation and interactivity. Focused on clear information hierarchy and respectful visual design to handle heavy subject matter.",
     outcome:
-      "Delivered a fully functional archive platform with seamless navigation through large media collections and a user-friendly interface for non-technical operators.",
+      "A fully functional static archive deployed live on GitHub Pages, demonstrating command of core web fundamentals — semantic HTML, responsive CSS, and DOM manipulation — built entirely without frameworks or libraries.",
+    link: "https://stelioschatzis04.github.io/Gaza-digital-archive/",
   },
   {
     id: 4,
