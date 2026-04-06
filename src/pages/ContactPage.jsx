@@ -52,6 +52,8 @@ export default function ContactSection() {
   const [touched, setTouched] = useState({});
   const [focused, setFocused] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
   const [hoverBtn, setHoverBtn] = useState(false);
   const [hoverGithub, setHoverGithub] = useState(false);
 
@@ -70,9 +72,31 @@ export default function ContactSection() {
     isValidEmail(formData.email) &&
     formData.message.trim().length > 10;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setTouched({ name: true, email: true, message: true });
-    if (canSubmit) setSubmitted(true);
+    if (!canSubmit) return;
+    setHoverBtn(false);
+    setLoading(true);
+    setSubmitError(null);
+    try {
+      const res = await fetch(
+        `https://formspree.io/f/${import.meta.env.VITE_FORMSPREE_ID}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setSubmitError("Something went wrong. Please try again.");
+      }
+    } catch {
+      setSubmitError("Couldn't send — please email me directly.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const borderForState = (field) => {
@@ -365,6 +389,7 @@ export default function ContactSection() {
                     <div style={{ position: "relative" }}>
                       <input
                         type="text"
+                        disabled={loading}
                         placeholder="John Doe"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -401,6 +426,7 @@ export default function ContactSection() {
                     <div style={{ position: "relative" }}>
                       <input
                         type="email"
+                        disabled={loading}
                         placeholder="john@example.com"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -437,6 +463,7 @@ export default function ContactSection() {
                     <div style={{ position: "relative" }}>
                       <textarea
                         rows={5}
+                        disabled={loading}
                         placeholder="Describe your project, goals, and timeline..."
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -470,7 +497,8 @@ export default function ContactSection() {
                   <button
                     className="btn-cool"
                     onClick={handleSubmit}
-                    onMouseEnter={() => setHoverBtn(true)}
+                    disabled={loading}
+                    onMouseEnter={() => !loading && setHoverBtn(true)}
                     onMouseLeave={() => setHoverBtn(false)}
                     style={{
                       width: "100%",
@@ -487,15 +515,27 @@ export default function ContactSection() {
                       fontWeight: 600,
                       fontFamily: fonts.body,
                       letterSpacing: "0.02em",
-                      cursor: "pointer",
+                      cursor: loading ? "not-allowed" : "pointer",
+                      opacity: loading ? 0.7 : 1,
                       transition: "all 0.35s cubic-bezier(0.22,1,0.36,1)",
                       boxShadow: "none",
-                      transform: hoverBtn ? "translateY(-5px) scale(1.04)" : "translateY(0) scale(1)",
+                      transform: hoverBtn && !loading ? "translateY(-5px) scale(1.04)" : "translateY(0) scale(1)",
                     }}
                   >
-                    Send Message
-                    <SendIcon />
+                    {loading ? "Sending…" : "Send Message"}
+                    {!loading && <SendIcon />}
                   </button>
+                  {submitError && (
+                    <div role="alert" style={{
+                      marginTop: 12,
+                      color: "#f87171",
+                      fontSize: 13,
+                      textAlign: "center",
+                      lineHeight: 1.5,
+                    }}>
+                      {submitError}
+                    </div>
+                  )}
                 </div>
               ) : (
                 /* ── Success state ── */
