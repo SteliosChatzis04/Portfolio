@@ -16,6 +16,15 @@
 //   solution     how you solved it
 //   outcome      measurable results
 
+// Filter categories shown on the Portfolio page.
+// key must match the `category` field used on projects below.
+export const categories = [
+  { key: "all",     label: "All" },
+  { key: "web",     label: "Web Apps" },
+  { key: "data",    label: "Data & Analytics" },
+  { key: "systems", label: "Systems" },
+];
+
 export const projects = [
   {
     id: 1,
@@ -62,6 +71,7 @@ export const projects = [
     category: "web",
     color: "#38bdf8",
     icon: "store",
+    image: "/Gemini_Generated_Image_cc2k17cc2k17cc2k.png",
     description:
       "A static frontend archive documenting the ongoing conflict in Gaza — built as a Web Development 1 academic project using pure HTML, CSS, and JavaScript. The site organises media, testimonies, and contextual data into a navigable, respectful interface without any backend or framework.",
     role: "Frontend Developer",

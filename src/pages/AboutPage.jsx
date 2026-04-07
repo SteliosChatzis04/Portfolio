@@ -102,11 +102,7 @@ export default function AboutSection() {
     <>
       {/* Minimal style block: keyframes + shimmer pseudo-element + responsive grid */}
       <style>{`
-        @keyframes btnShimmer { 0% { left: -75% } 100% { left: 125% } }
         @keyframes statReveal { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-        .about-cta { overflow: hidden !important; position: relative; }
-        .about-cta::after { content: ''; position: absolute; top: -50%; left: -75%; width: 50%; height: 200%; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.22) 50%, transparent 60%); pointer-events: none; }
-        .about-cta:hover::after { animation: btnShimmer 0.65s ease forwards; }
         .stat-reveal-0 { animation: statReveal 0.6s ease 1.00s forwards; opacity: 0; }
         .stat-reveal-1 { animation: statReveal 0.6s ease 1.15s forwards; opacity: 0; }
         .stat-reveal-2 { animation: statReveal 0.6s ease 1.30s forwards; opacity: 0; }
@@ -252,7 +248,7 @@ export default function AboutSection() {
               {/* CTA */}
               <Link
                 to="/resume"
-                className="about-cta"
+                className="btn-cool"
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 10,
                   padding: "14px 32px", borderRadius: 100,

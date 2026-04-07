@@ -5,14 +5,7 @@ import Footer from "../components/Footer.jsx";
 import SectionHeader from "../components/SectionHeader.jsx";
 import { Thumbnail } from "../components/CaseStudy.jsx";
 import CaseStudyPage from "../components/CaseStudyPage.jsx";
-import { projects as PROJECTS } from "../data/portfolio.js";
-
-const CATEGORIES = [
-  { key: "all",     label: "All" },
-  { key: "web",     label: "Web Apps" },
-  { key: "data",    label: "Data & Analytics" },
-  { key: "systems", label: "Systems" },
-];
+import { projects as PROJECTS, categories as CATEGORIES } from "../data/portfolio.js";
 
 
 /* ════════════════════════════════════════
@@ -62,8 +55,6 @@ export default function PortfolioSection() {
   /* ── Grid ── */
   return (
     <>
-      <style>{`* { box-sizing: border-box; margin: 0; padding: 0; }`}</style>
-
       <section style={{
         background: colors.bg,
         minHeight: "100vh",
