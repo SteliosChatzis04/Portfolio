@@ -1,10 +1,12 @@
 // src/pages/Home/index.jsx
+import { useState }          from "react";
 import { useNavigate }       from "react-router-dom";
 import Footer                from "../../components/Footer.jsx";
 import AnimatedSection       from "../../components/AnimatedSection.jsx";
 import Button                from "../../components/Button.jsx";
 import SectionHeader         from "../../components/SectionHeader.jsx";
 import SkillTag              from "../../components/SkillTag.jsx";
+import CaseStudyPage         from "../../components/CaseStudyPage.jsx";
 import ParticleHero          from "./ParticleHero.jsx";
 import { TypewriterGreeting, AnimatedHeroTitle } from "./HeroText.jsx";
 import ProjectCard           from "./ProjectCard.jsx";
@@ -14,13 +16,18 @@ import { hero, bio, skills, featuredProjects, services as homeServices } from ".
 import { colors, fonts }     from "../../tokens.js";
 
 const SERVICE_ICONS = {
-  "Interface Design": <UIUXIcon />,
-  "Web Dev":          <WebDevIcon />,
-  "Prototyping":      <PrototypeIcon />,
+  "design":    <UIUXIcon />,
+  "webdev":    <WebDevIcon />,
+  "prototype": <PrototypeIcon />,
 };
 
 export default function Home() {
   const navigate = useNavigate();
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  if (selectedProject) {
+    return <CaseStudyPage project={selectedProject} onBack={() => setSelectedProject(null)} />;
+  }
 
   return (
     <div style={{ background: colors.bg, color: colors.textPrimary, fontFamily: fonts.body, minHeight: "100vh", overflowX: "hidden" }}>
@@ -63,7 +70,7 @@ export default function Home() {
       <section style={{ padding: "70px 48px 50px", maxWidth: "1100px", margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "28px" }}>
           {featuredProjects.map((p, i) => (
-            <ProjectCard key={p.title} title={p.title} subtitle={p.subtitle} imageUrl={p.imageUrl} delay={i * 0.15} />
+            <ProjectCard key={p.id} project={p} delay={i * 0.15} onSelect={setSelectedProject} />
           ))}
         </div>
       </section>
@@ -75,7 +82,7 @@ export default function Home() {
         </AnimatedSection>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "28px" }}>
           {homeServices.map((s, i) => (
-            <ServiceCard key={s.title} icon={SERVICE_ICONS[s.title]} title={s.title} description={s.description} delay={0.1 + i * 0.15} />
+            <ServiceCard key={s.title} icon={SERVICE_ICONS[s.icon]} title={s.title} description={s.description} delay={0.1 + i * 0.15} />
           ))}
         </div>
       </section>

@@ -1,6 +1,12 @@
 // src/data/about.js
 // ─── Edit this file to update the About page content ───
 
+export const bio = {
+  label: "Who I am",
+  heading: "Engineering software with precision and purpose.",
+  body: "I'm an Electrical and Computer Engineering student at the University of Peloponnese, focused on backend systems and software architecture. My academic path spans data structures, compilers, distributed systems, and full-stack development — building the depth to approach software problems with rigour and clarity. I favour spec-driven development and clean architecture, and I build at every layer of the stack.",
+};
+
 // Counter stats displayed at the top of the About page
 export const stats = [
   { value: "5+",  label: "Projects Built" },

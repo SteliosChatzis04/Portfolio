@@ -1,5 +1,6 @@
 // src/data/home.js
 // ─── Edit this file to update Home page content ───
+// featuredProjects is derived from portfolio.js — edit projects there, not here.
 
 export const hero = {
   tagline:
@@ -13,39 +14,27 @@ export const bio = {
 
 export const skills = ["Java", "Python", "Node.js", "React", "C", "SQL"];
 
-// Mini cards shown on the home page — update title/subtitle when you have real projects.
-// imageUrl can be a CSS gradient string or a real image path e.g. "/images/project1.jpg"
-export const featuredProjects = [
-  {
-    title: "LoL Insights & Analytics Tool",
-    subtitle: "Python • React • Riot API",
-    imageUrl: "linear-gradient(135deg,#0d0a2e 0%,#1a1550 50%,#2d2080 100%)",
-  },
-  {
-    title: "Custom Language Compiler",
-    subtitle: "C • Flex • Bison",
-    imageUrl: "linear-gradient(135deg,#0a1f0d 0%,#0f3318 50%,#1a4f28 100%)",
-  },
-  {
-    title: "Digital Archive Platform",
-    subtitle: "HTML • CSS • JavaScript",
-    imageUrl: "linear-gradient(135deg,#0a1930 0%,#0f2545 50%,#0a3a6e 100%)",
-  },
-];
+import { projects } from "./portfolio.js";
+
+// Top 3 projects shown on the home page — full objects sourced from portfolio.js (single source of truth).
+export const featuredProjects = projects.slice(0, 3);
 
 // Mini service cards on the home page (separate from the full Services page)
 export const services = [
   {
+    icon: "design",
     title: "Interface Design",
     description:
       "Crafting clean, functional interfaces informed by engineering judgment — supported by working knowledge of Figma and Axure.",
   },
   {
+    icon: "webdev",
     title: "Web Dev",
     description:
       "Building full-stack applications with a backend-first mindset — REST APIs, database design, and server-side architecture that scales.",
   },
   {
+    icon: "prototype",
     title: "Prototyping",
     description:
       "Translating requirements into structured, testable prototypes before implementation — reducing ambiguity and aligning expectations early.",
