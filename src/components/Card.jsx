@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { colors, shadows, transitions } from "../tokens.js";
 
-export default function Card({ children, style, onHoverChange }) {
+export default function Card({ children, style, onHoverChange, onClick }) {
   const [hovered, setHovered] = useState(false);
 
   const handleMouseEnter = () => { setHovered(true);  onHoverChange?.(true);  };
@@ -12,6 +12,7 @@ export default function Card({ children, style, onHoverChange }) {
     <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={onClick}
       style={{
         background: "rgba(15,25,50,0.7)",
         borderRadius: "12px",

@@ -71,7 +71,7 @@ export const projects = [
     category: "web",
     color: "#38bdf8",
     icon: "store",
-    image: "/Gemini_Generated_Image_cc2k17cc2k17cc2k.png",
+    image: "/gaza-archive-preview.png",
     description:
       "A static frontend archive documenting the ongoing conflict in Gaza — built as a Web Development 1 academic project using pure HTML, CSS, and JavaScript. The site organises media, testimonies, and contextual data into a navigable, respectful interface without any backend or framework.",
     role: "Frontend Developer",

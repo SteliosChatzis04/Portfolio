@@ -2,8 +2,33 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // Restore the path encoded by public/404.html so React Router sees the
+      // original URL (e.g. /Portfolio/about) instead of the redirect query string.
+      (function (l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search.slice(1).split('&').map(function (s) {
+            return s.replace(/~and~/g, '&');
+          });
+          window.history.replaceState(
+            null, null,
+            l.pathname.slice(0, -1) + decoded[0] +
+            (decoded[1] ? '?' + decoded[1] : '') +
+            l.hash
+          );
+        }
+      }(window.location));
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stelios Ch. — Portfolio</title>
+    <meta name="description" content="Computer Science student & full-stack developer. Browse my projects, explore my skills, and get in touch — open to opportunities." />
+    <meta property="og:title" content="Stelios Ch. — Portfolio" />
+    <meta property="og:description" content="Computer Science student & full-stack developer. Browse my projects, explore my skills, and get in touch — open to opportunities." />
+    <meta property="og:url" content="https://SteliosChatzis04.github.io/Portfolio/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Stelios Ch. — Portfolio" />
+    <meta name="twitter:description" content="Computer Science student & full-stack developer. Browse my projects, explore my skills, and get in touch — open to opportunities." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet" />

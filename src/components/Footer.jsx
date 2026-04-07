@@ -45,7 +45,7 @@ export default function Footer({ accent = colors.accent, accentEnd = colors.acce
             fontWeight: 600,
           }}
         >
-          Stelios Chatzisavramidis
+          Stelios Chatziavramidis
         </span>
         . All rights reserved.
       </p>

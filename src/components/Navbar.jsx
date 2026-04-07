@@ -11,8 +11,7 @@ const NAV_LINKS = [
   ["Contact",   "/contact"],
 ];
 
-function Logo({ height = 40, onClick }) {
-  const bracketSize = Math.round(height * 0.55);
+function Logo({ height = 56, onClick }) {
   const [hovered, setHovered] = useState(false);
   return (
     <div
@@ -25,9 +24,7 @@ function Logo({ height = 40, onClick }) {
         opacity: hovered ? 0.75 : 1,
       }}
     >
-      <span style={{ fontFamily: fonts.mono, fontSize: bracketSize + "px", color: colors.accent, fontWeight: 300, opacity: 0.7, lineHeight: 1, marginTop: "2px" }}>&lt;</span>
-      <img src={LOGO_URL} alt="Stelios Ch." style={{ height: height + "px" }} />
-      <span style={{ fontFamily: fonts.mono, fontSize: bracketSize + "px", color: colors.accent, fontWeight: 300, opacity: 0.7, lineHeight: 1, marginTop: "2px" }}>/&gt;</span>
+      <img src={LOGO_URL} alt="Stelios Ch." style={{ height: height + "px", mixBlendMode: "screen" }} />
     </div>
   );
 }
@@ -119,7 +116,7 @@ export default function Navbar() {
           borderBottom: scrolled ? `1px solid ${colors.border}` : "1px solid transparent",
         }}
       >
-        <Logo height={40} onClick={() => handleNav("/")} />
+        <Logo height={56} onClick={() => handleNav("/")} />
 
         {/* Desktop links */}
         <div

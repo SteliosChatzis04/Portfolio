@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Stelios Ch. — Portfolio</title>
+    <script>
+      // SPA redirect for GitHub Pages.
+      // When GitHub Pages serves this 404 page, re-encode the URL as a query
+      // string and redirect to index.html so React Router can handle the route.
+      // segmentCount = 1 because the site lives at /Portfolio/ (one path segment).
+      var segmentCount = 1;
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1 + segmentCount).join('/') + '/?/' +
+        l.pathname.slice(1).split('/').slice(segmentCount).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html>

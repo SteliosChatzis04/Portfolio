@@ -45,6 +45,8 @@ export function PrototypeIcon() {
 }
 
 // ── Services page icon component (circle container + SVG) ──
+// type: "design" | "code" | anything else → mobile (default)
+// size: diameter of the circle container in px (default 56)
 export function ServiceIcon({ type, size = 56 }) {
   const circleStyle = {
     width: size, height: size,
@@ -52,8 +54,9 @@ export function ServiceIcon({ type, size = 56 }) {
     border: `2px solid ${colors.sky}`,
     display: "flex", alignItems: "center", justifyContent: "center",
     background: "rgba(56,189,248,0.06)",
-    flexShrink: 0,
+    flexShrink: 0, // prevents the circle from squishing in flex rows
   };
+  // shared SVG attributes spread onto every variant to avoid repetition
   const svgProps = {
     width: 26, height: 26, viewBox: "0 0 24 24",
     fill: "none", stroke: colors.sky,
@@ -61,6 +64,7 @@ export function ServiceIcon({ type, size = 56 }) {
   };
   if (type === "design") return (
     <div style={circleStyle}>
+      {/* Design icon: grid/layout symbol */}
       <svg {...svgProps}>
         <rect x="3" y="3" width="18" height="18" rx="2" />
         <path d="M3 9h18" /><path d="M9 21V9" /><circle cx="16" cy="15" r="2" />
@@ -69,6 +73,7 @@ export function ServiceIcon({ type, size = 56 }) {
   );
   if (type === "code") return (
     <div style={circleStyle}>
+      {/* Code icon: angle-brackets + slash */}
       <svg {...svgProps}>
         <polyline points="16 18 22 12 16 6" />
         <polyline points="8 6 2 12 8 18" />
@@ -76,12 +81,12 @@ export function ServiceIcon({ type, size = 56 }) {
       </svg>
     </div>
   );
-  // default: mobile
+  // default: mobile icon (phone outline with screen lines)
   return (
     <div style={circleStyle}>
       <svg {...svgProps}>
         <rect x="5" y="2" width="14" height="20" rx="2" />
-        <line x1="12" y1="18" x2="12" y2="18.01" />
+        <line x1="12" y1="18" x2="12" y2="18.01" /> {/* home indicator dot */}
         <path d="M9 6h6" /><path d="M9 10h6" /><path d="M9 14h4" />
       </svg>
     </div>
@@ -103,6 +108,32 @@ export function LocationIcon() {
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={colors.sky} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
       <circle cx="12" cy="10" r="3" />
+    </svg>
+  );
+}
+
+// ── Portfolio page inline icons ──
+export function ArrowLeftIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M19 12H5" /><path d="M12 19l-7-7 7-7" />
+    </svg>
+  );
+}
+
+export function EyeIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" />
+    </svg>
+  );
+}
+
+export function ExternalLinkIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      <polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
     </svg>
   );
 }

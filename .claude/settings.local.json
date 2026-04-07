@@ -14,7 +14,15 @@
       "Bash(grep -rn \"#[0-9a-fA-F]\\\\{3,6\\\\}\\\\|rgba\\(\" src/pages/PortfolioPage.jsx src/pages/ResumePage.jsx src/pages/ServicesPage.jsx src/components/ --include=\"*.jsx\" --include=\"*.js\")",
       "Bash(grep -rn \"#[0-9a-fA-F]\\\\{3,6\\\\}\\\\|rgba\\(\" src/components/Navbar.jsx src/components/Footer.jsx)",
       "Bash(git -C \"c:/Users/steli/OneDrive/Desktop/The big boss/Portfolio\" diff 955f877..6b4d20d --stat)",
-      "Bash(git -C \"c:/Users/steli/OneDrive/Desktop/The big boss/Portfolio\" diff 955f877..6b4d20d -- src/index.css src/main.jsx index.html)"
+      "Bash(git -C \"c:/Users/steli/OneDrive/Desktop/The big boss/Portfolio\" diff 955f877..6b4d20d -- src/index.css src/main.jsx index.html)",
+      "Bash(ls -la .env*)",
+      "Bash(git -C \"C:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/.worktrees/refactor-structure\" log --oneline 93a099a..7e87222)",
+      "Bash(git -C \"C:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/.worktrees/refactor-structure\" show 93a099a --stat)",
+      "Bash(git -C \"C:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/.worktrees/refactor-structure\" diff 93a099a 7e87222)",
+      "Bash(git -C \"C:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/.worktrees/refactor-structure\" show 7e87222 --stat)",
+      "Bash(git -C \"C:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/.worktrees/refactor-structure\" status --short)",
+      "Bash(git -C \"C:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/.worktrees/refactor-structure\" status)",
+      "Bash(cat \"c:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/.github/workflows/\"*.yml)"
     ]
   }
 }
