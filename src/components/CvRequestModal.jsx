@@ -19,6 +19,12 @@ const inputBase = {
   letterSpacing: "0.01em",
 };
 
+const CheckIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
+);
+
 export default function CvRequestModal({ open, onClose }) {
   const [formData, setFormData] = useState({ name: "", email: "", reason: "" });
   const [touched, setTouched] = useState({});
@@ -101,12 +107,6 @@ export default function CvRequestModal({ open, onClose }) {
   };
 
   if (!open) return null;
-
-  const CheckIcon = () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20 6 9 17l-5-5" />
-    </svg>
-  );
 
   return (
     <div
@@ -251,8 +251,8 @@ export default function CvRequestModal({ open, onClose }) {
             {/* Submit */}
             <button
               onClick={handleSubmit}
-              disabled={loading}
-              onMouseEnter={() => !loading && setHoverBtn(true)}
+              disabled={loading || !canSubmit}
+              onMouseEnter={() => !loading && canSubmit && setHoverBtn(true)}
               onMouseLeave={() => setHoverBtn(false)}
               style={{
                 width: "100%", display: "inline-flex", alignItems: "center",
@@ -261,10 +261,10 @@ export default function CvRequestModal({ open, onClose }) {
                 background: `linear-gradient(135deg, ${colors.sky}, ${colors.indigo})`,
                 color: colors.bg, fontSize: 15, fontWeight: 600,
                 fontFamily: fonts.body, letterSpacing: "0.02em",
-                cursor: loading ? "not-allowed" : "pointer",
-                opacity: loading ? 0.7 : 1,
+                cursor: (loading || !canSubmit) ? "not-allowed" : "pointer",
+                opacity: (loading || !canSubmit) ? 0.7 : 1,
                 transition: "all 0.35s cubic-bezier(0.22,1,0.36,1)",
-                transform: hoverBtn && !loading ? "translateY(-5px) scale(1.04)" : "translateY(0) scale(1)",
+                transform: hoverBtn && !loading && canSubmit ? "translateY(-5px) scale(1.04)" : "translateY(0) scale(1)",
               }}
             >
               {loading ? "Sending…" : "Send Request"}
