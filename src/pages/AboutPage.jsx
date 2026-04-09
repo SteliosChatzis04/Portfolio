@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import Footer from "../components/Footer.jsx";
+import CvRequestModal from "../components/CvRequestModal.jsx";
 import { stats as STATS, skills as SKILLS, bio as BIO } from "../data/about.js";
 import { colors, fonts } from "../tokens.js";
 
@@ -78,6 +78,7 @@ function Counter({ target, suffix = "", start = false, delay = 0 }) {
 export default function AboutSection() {
   const [visible, setVisible] = useState(false);
   const [hoveredSkill, setHoveredSkill] = useState(null);
+  const [cvModalOpen, setCvModalOpen] = useState(false);
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -246,9 +247,9 @@ export default function AboutSection() {
               </div>
 
               {/* CTA */}
-              <Link
-                to="/resume"
+              <button
                 className="btn-cool"
+                onClick={() => setCvModalOpen(true)}
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 10,
                   padding: "14px 32px", borderRadius: 100,
@@ -256,7 +257,6 @@ export default function AboutSection() {
                   color: colors.bg, fontSize: 15, fontWeight: 600,
                   fontFamily: fonts.body, border: "none", cursor: "pointer",
                   boxShadow: `0 4px 20px ${colors.accent}26`,
-                  textDecoration: "none",
                   ...reveal(0.8),
                 }}
                 onMouseEnter={e => {
@@ -275,8 +275,8 @@ export default function AboutSection() {
                   <line x1="16" y1="17" x2="8" y2="17" />
                   <polyline points="10 9 9 9 8 9" />
                 </svg>
-                View CV
-              </Link>
+                Request CV
+              </button>
             </div>
           </div>
 
@@ -334,6 +334,7 @@ export default function AboutSection() {
       <div style={{ opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 2s" }}>
         <Footer />
       </div>
+      <CvRequestModal open={cvModalOpen} onClose={() => setCvModalOpen(false)} />
     </>
   );
 }
