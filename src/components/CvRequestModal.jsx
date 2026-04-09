@@ -233,8 +233,13 @@ export default function CvRequestModal({ open, onClose }) {
                 onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
                 onFocus={() => setFocused("reason")}
                 onBlur={() => { setFocused(null); setTouched({ ...touched, reason: true }); }}
-                style={{ ...inputBase, resize: "vertical", minHeight: 110, border: borderForState("reason"), boxShadow: shadowForState("reason"), lineHeight: 1.6 }}
+                style={{ ...inputBase, resize: "vertical", minHeight: 110, border: borderForState("reason"), boxShadow: shadowForState("reason"), lineHeight: 1.6, paddingRight: getFieldState("reason") === "valid" ? 40 : 16 }}
               />
+              {getFieldState("reason") === "valid" && (
+                <div style={{ position: "absolute", right: 14, top: 14 }}>
+                  <CheckIcon />
+                </div>
+              )}
               <div style={{ display: "flex", justifyContent: "space-between", marginTop: 6 }}>
                 {getFieldState("reason") === "error" ? (
                   <div style={{ color: "#f87171", fontSize: 11 }}>Please add a bit more detail (at least 10 characters)</div>
