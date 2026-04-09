@@ -9,8 +9,7 @@ const inputBase = {
   boxSizing: "border-box",
   padding: "14px 16px",
   borderRadius: 10,
-  background: "rgba(255,255,255,0.04)",
-  backdropFilter: "blur(8px)",
+  background: "rgba(255,255,255,0.07)",
   color: "#e2e8f0",
   fontSize: 14,
   fontFamily: fonts.body,
@@ -130,8 +129,7 @@ export default function CvRequestModal({ open, onClose }) {
       style={{
         position: "fixed",
         inset: 0,
-        background: "rgba(0,0,0,0.6)",
-        backdropFilter: "blur(4px)",
+        background: "rgba(0,0,0,0.75)",
         zIndex: 1000,
         display: "flex",
         alignItems: "center",
@@ -147,13 +145,13 @@ export default function CvRequestModal({ open, onClose }) {
         style={{
           width: "100%",
           maxWidth: 480,
-          background: "rgba(255,255,255,0.03)",
-          backdropFilter: "blur(12px)",
-          border: "1px solid rgba(255,255,255,0.06)",
+          background: "#0f1930",
+          border: "1px solid rgba(255,255,255,0.1)",
           borderRadius: 16,
           padding: "36px 30px",
           position: "relative",
           fontFamily: fonts.body,
+          boxShadow: "0 24px 64px rgba(0,0,0,0.6)",
         }}
       >
         {!submitted ? (

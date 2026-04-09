@@ -33,7 +33,7 @@ export const projects = [
     category: "data",
     color: "#818cf8",
     icon: "chart",
-    image: "/Advanced_Analytics_League_Platform.png",
+    //image: "/Advanced_Analytics_League_Platform.png",
     description:
       "A full-stack analytics application leveraging the Riot Games API to provide advanced player performance metrics and match outcome predictions through interactive data visualisation.",
     role: "Full-Stack Developer",
@@ -53,7 +53,7 @@ export const projects = [
     category: "systems",
     color: "#34d399",
     icon: "brand",
-    image: "/Compiler.png",
+//image: "/Compiler.png",
     description:
       "A compiler for a custom programming language, covering the full pipeline from lexical analysis and syntax parsing to semantic analysis and code generation.",
     role: "Systems Engineer",
@@ -94,7 +94,7 @@ export const projects = [
     category: "web",
     color: "#f472b6",
     icon: "home",
-    image: "/Portfolio_Architecture.png",
+    //image: "/Portfolio_Architecture.png",
     description:
       "A responsive single-page portfolio application built with React, featuring animated UI components, an interactive particle canvas, and a data-driven multi-page architecture.",
     role: "Full-Stack Developer",

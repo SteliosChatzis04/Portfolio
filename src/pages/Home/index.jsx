@@ -11,12 +11,12 @@ import ParticleHero          from "./ParticleHero.jsx";
 import { TypewriterGreeting, AnimatedHeroTitle } from "./HeroText.jsx";
 import ProjectCard           from "./ProjectCard.jsx";
 import ServiceCard           from "./ServiceCard.jsx";
-import { ArrowIcon, UIUXIcon, WebDevIcon, PrototypeIcon } from "../../icons.jsx";
+import { ArrowIcon, UIUXIcon, WebDevIcon, PrototypeIcon, SpecIcon } from "../../icons.jsx";
 import { hero, bio, skills, featuredProjects, services as homeServices } from "../../data/home.js";
 import { colors, fonts }     from "../../tokens.js";
 
 const SERVICE_ICONS = {
-  "design":    <UIUXIcon />,
+  "spec":      <SpecIcon />,
   "webdev":    <WebDevIcon />,
   "prototype": <PrototypeIcon />,
 };

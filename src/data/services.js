@@ -1,14 +1,14 @@
 // src/data/services.js
 // ─── Edit this file to update the Services page content ───
 
-// icon must be one of: "design" | "code" | "prototype"
+// icon must be one of: "spec" | "code" | "prototype"
 // (these map to the SVG icon components already in ServicesPage.jsx)
 export const services = [
   {
-    title: "Interface Design",
+    title: "Spec-Driven Development",
     description:
-      "Designing functional, clean interfaces informed by engineering judgment — using Figma and Axure as tools, not as the end goal.",
-    icon: "design",
+      "Writing detailed specifications before touching code — defining behaviour, edge cases, and acceptance criteria upfront so every implementation decision has a clear reference point.",
+    icon: "spec",
   },
   {
     title: "Web Development",

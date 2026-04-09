@@ -31,6 +31,17 @@ export function WebDevIcon() {
   );
 }
 
+export function SpecIcon() {
+  return (
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+      <rect x="8" y="4" width="24" height="32" rx="2" stroke={colors.accent} strokeWidth="2" />
+      <line x1="13" y1="13" x2="27" y2="13" stroke={colors.accent} strokeWidth="2" strokeLinecap="round" />
+      <line x1="13" y1="19" x2="27" y2="19" stroke={colors.accent} strokeWidth="2" strokeLinecap="round" />
+      <polyline points="13,26 16,29 22,23" stroke={colors.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export function PrototypeIcon() {
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
@@ -62,6 +73,17 @@ export function ServiceIcon({ type, size = 56 }) {
     fill: "none", stroke: colors.sky,
     strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round",
   };
+  if (type === "spec") return (
+    <div style={circleStyle}>
+      {/* Spec icon: document with lines and checkmark */}
+      <svg {...svgProps}>
+        <rect x="5" y="2" width="14" height="20" rx="2" />
+        <line x1="8" y1="8" x2="16" y2="8" />
+        <line x1="8" y1="12" x2="16" y2="12" />
+        <polyline points="8,16 10,18 14,14" />
+      </svg>
+    </div>
+  );
   if (type === "design") return (
     <div style={circleStyle}>
       {/* Design icon: grid/layout symbol */}

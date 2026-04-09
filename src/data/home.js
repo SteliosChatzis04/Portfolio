@@ -22,10 +22,10 @@ export const featuredProjects = projects.slice(0, 3);
 // Mini service cards on the home page (separate from the full Services page)
 export const services = [
   {
-    icon: "design",
-    title: "Interface Design",
+    icon: "spec",
+    title: "Spec-Driven Development",
     description:
-      "Crafting clean, functional interfaces informed by engineering judgment — supported by working knowledge of Figma and Axure.",
+      "Writing detailed specifications before touching code — defining behaviour, edge cases, and acceptance criteria upfront to reduce ambiguity and ship software that does exactly what was agreed.",
   },
   {
     icon: "webdev",

@@ -22,7 +22,10 @@
       "Bash(git -C \"C:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/.worktrees/refactor-structure\" show 7e87222 --stat)",
       "Bash(git -C \"C:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/.worktrees/refactor-structure\" status --short)",
       "Bash(git -C \"C:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/.worktrees/refactor-structure\" status)",
-      "Bash(cat \"c:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/.github/workflows/\"*.yml)"
+      "Bash(cat \"c:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/.github/workflows/\"*.yml)",
+      "Bash(bash \"C:/Users/steli/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.6/skills/brainstorming/scripts/start-server.sh\" --project-dir \"c:/Users/steli/OneDrive/Desktop/The big boss/Portfolio\")",
+      "Bash(rm -rf \"c:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/.worktrees/refactor-structure\")",
+      "Bash(rm -rf \"c:/Users/steli/OneDrive/Desktop/The big boss/Portfolio/.superpowers/brainstorm/369-1775657521\")"
     ]
   }
 }

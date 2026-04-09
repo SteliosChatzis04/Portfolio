@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { LOGO_URL } from "../utils/logo-url.js";
 import { colors, fonts } from "../tokens.js";
 
 const NAV_LINKS = [
@@ -10,24 +9,6 @@ const NAV_LINKS = [
   ["About",     "/about"],
   ["Contact",   "/contact"],
 ];
-
-function Logo({ height = 56, onClick }) {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <div
-      onClick={onClick}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        display: "flex", alignItems: "center", gap: "4px",
-        cursor: "pointer", transition: "opacity 0.3s",
-        opacity: hovered ? 0.75 : 1,
-      }}
-    >
-      <img src={LOGO_URL} alt="Stelios Ch." style={{ height: height + "px", mixBlendMode: "screen" }} />
-    </div>
-  );
-}
 
 function HamburgerIcon({ open }) {
   const bar = (transform, opacity = 1) => (
@@ -109,15 +90,13 @@ export default function Navbar() {
         className="nb-nav"
         style={{
           position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-          display: "flex", justifyContent: "space-between", alignItems: "center",
+          display: "flex", justifyContent: "flex-end", alignItems: "center",
           background: scrolled ? "rgba(8,14,28,0.95)" : "transparent",
           backdropFilter: scrolled ? "blur(16px)" : "none",
           transition: "all 0.4s ease",
           borderBottom: scrolled ? `1px solid ${colors.border}` : "1px solid transparent",
         }}
       >
-        <Logo height={56} onClick={() => handleNav("/")} />
-
         {/* Desktop links */}
         <div
           className="nb-desktop"
