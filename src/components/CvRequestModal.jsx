@@ -1,5 +1,5 @@
 // src/components/CvRequestModal.jsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { colors, fonts } from "../tokens.js";
 
 const isValidEmail = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
@@ -33,6 +33,13 @@ export default function CvRequestModal({ open, onClose }) {
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const [hoverBtn, setHoverBtn] = useState(false);
+  const closeButtonRef = useRef(null);
+
+  useEffect(() => {
+    if (open && closeButtonRef.current) {
+      closeButtonRef.current.focus();
+    }
+  }, [open]);
 
   useEffect(() => {
     if (open) {
@@ -48,9 +55,13 @@ export default function CvRequestModal({ open, onClose }) {
 
   useEffect(() => {
     if (!open) return;
+    document.body.style.overflow = "hidden";
     const handler = (e) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handler);
+    };
   }, [open, onClose]);
 
   const getFieldState = (field) => {
@@ -80,6 +91,11 @@ export default function CvRequestModal({ open, onClose }) {
   };
 
   const handleSubmit = async () => {
+    const endpointId = import.meta.env.VITE_FORMSPREE_CV_ID;
+    if (!endpointId) {
+      setSubmitError("Form not configured. Please email me directly.");
+      return;
+    }
     setTouched({ name: true, email: true, reason: true });
     if (!canSubmit) return;
     setHoverBtn(false);
@@ -87,7 +103,7 @@ export default function CvRequestModal({ open, onClose }) {
     setSubmitError(null);
     try {
       const res = await fetch(
-        `https://formspree.io/f/${import.meta.env.VITE_FORMSPREE_CV_ID}`,
+        `https://formspree.io/f/${endpointId}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -125,6 +141,9 @@ export default function CvRequestModal({ open, onClose }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cv-modal-title"
         style={{
           width: "100%",
           maxWidth: 480,
@@ -141,6 +160,7 @@ export default function CvRequestModal({ open, onClose }) {
           <>
             {/* Close button */}
             <button
+              ref={closeButtonRef}
               onClick={onClose}
               style={{
                 position: "absolute", top: 16, right: 16,
@@ -159,7 +179,7 @@ export default function CvRequestModal({ open, onClose }) {
             </button>
 
             {/* Title */}
-            <h3 style={{ color: colors.textPrimary, fontSize: 20, fontWeight: 700, marginBottom: 6, letterSpacing: "-0.01em" }}>
+            <h3 id="cv-modal-title" style={{ color: colors.textPrimary, fontSize: 20, fontWeight: 700, marginBottom: 6, letterSpacing: "-0.01em" }}>
               Request My CV
             </h3>
             <p style={{ color: colors.textMuted, fontSize: 13, lineHeight: 1.6, marginBottom: 28 }}>
