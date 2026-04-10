@@ -9,7 +9,7 @@ export const bio = {
 
 // Counter stats displayed at the top of the About page
 export const stats = [
-  { value: "5+",  label: "Projects Built" },
+  { value: "4+",  label: "Projects Built" },
   { value: "3+",  label: "Years Experience" },
   { value: "10+", label: "Technologies" },
   { value: "5+",  label: "Databases" },
