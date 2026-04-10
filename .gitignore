@@ -3,3 +3,9 @@ dist/
 .DS_Store
 *.local
 .worktrees/
+
+# AI tooling — not needed in the repo
+.claude/
+.agents/
+docs/
+skills-lock.json
