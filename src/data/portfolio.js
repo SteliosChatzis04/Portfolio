@@ -94,7 +94,7 @@ export const projects = [
     category: "web",
     color: "#f472b6",
     icon: "home",
-    //image: "/Portfolio_Architecture.png",
+    image: `${import.meta.env.BASE_URL}Portfolio.png`,
     description:
       "A responsive single-page portfolio application built with React, featuring animated UI components, an interactive particle canvas, and a data-driven multi-page architecture.",
     role: "Full-Stack Developer",
