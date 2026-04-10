@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { colors, fonts } from "../tokens.js";
+import { LOGO_URL } from "../utils/logo-url.js";
 
 const NAV_LINKS = [
   ["Home",      "/"],
@@ -90,13 +91,35 @@ export default function Navbar() {
         className="nb-nav"
         style={{
           position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-          display: "flex", justifyContent: "flex-end", alignItems: "center",
+          display: "flex", justifyContent: "space-between", alignItems: "center",
           background: scrolled ? "rgba(8,14,28,0.95)" : "transparent",
           backdropFilter: scrolled ? "blur(16px)" : "none",
           transition: "all 0.4s ease",
           borderBottom: scrolled ? `1px solid ${colors.border}` : "1px solid transparent",
         }}
       >
+        {/* Brand — logo + name · role */}
+        <button
+          onClick={() => handleNav("/")}
+          style={{
+            background: "none", border: "none", cursor: "pointer",
+            display: "flex", alignItems: "center", gap: 10, padding: 0,
+          }}
+          onMouseEnter={e => { e.currentTarget.style.opacity = "0.8"; }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+        >
+          <img
+            src={LOGO_URL}
+            alt="logo"
+            onError={e => { e.currentTarget.style.display = "none"; }}
+            style={{ height: 32, width: "auto", display: "block" }}
+          />
+          <span style={{ fontFamily: fonts.body, fontSize: 15, lineHeight: 1 }}>
+            <span style={{ color: colors.textPrimary, fontWeight: 600 }}>Stelios</span>
+            <span style={{ color: colors.accent, fontWeight: 400 }}>{" · Dev"}</span>
+          </span>
+        </button>
+
         {/* Desktop links */}
         <div
           className="nb-desktop"
