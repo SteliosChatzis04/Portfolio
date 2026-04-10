@@ -36,6 +36,7 @@ jobs:
         env:
           NODE_ENV: production
           VITE_FORMSPREE_ID: ${{ vars.VITE_FORMSPREE_ID }}
+          VITE_FORMSPREE_CV_ID: ${{ vars.VITE_FORMSPREE_CV_ID }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
