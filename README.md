@@ -1,6 +1,6 @@
 # Stelios Ch. — Portfolio
 
-A multi-page portfolio built with React, featuring animated page transitions, an interactive particle canvas, and a fully data-driven architecture.
+A single-page portfolio application built with React, featuring multiple routes, animated page transitions, an interactive particle canvas, and a fully data-driven architecture.
 
 **Live site:** https://SteliosChatzis04.github.io/Portfolio/
 
