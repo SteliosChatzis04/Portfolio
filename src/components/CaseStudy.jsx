@@ -284,7 +284,7 @@ export default function CaseStudy({ project, onBack }) {
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
-            <ExternalLinkIcon /> View Live Site
+            <ExternalLinkIcon /> {project.linkLabel || "View Live Site"}
           </a>
         )}
       </div>

@@ -189,6 +189,13 @@ export const ICON_PATHS = {
       <path d="M8 12 L10 15 L16 9" fill="none" strokeWidth="1.5" />
     </>
   ),
+  code: (
+    <>
+      <polyline points="9,7 4,12 9,17" fill="none" strokeWidth="1.5" />
+      <polyline points="15,7 20,12 15,17" fill="none" strokeWidth="1.5" />
+      <line x1="13" y1="5" x2="11" y2="19" strokeWidth="1.2" opacity="0.6" />
+    </>
+  ),
   zen: (
     <>
       <circle cx="12" cy="12" r="8" fill="none" strokeWidth="1.5" />

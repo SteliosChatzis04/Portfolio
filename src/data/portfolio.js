@@ -7,7 +7,7 @@
 //   tags       array of label strings shown as chips
 //   category   "web" | "data" | "systems"  (used by the filter)
 //   color      hex accent color for the icon ring
-//   icon       "chart" | "store" | "map" | "brand" | "zen" | "home"
+//   icon       "chart" | "store" | "map" | "brand" | "code" | "zen" | "home"
 //   description  one-paragraph summary
 //   role         your role on the project
 //   duration     how long it took
@@ -15,6 +15,8 @@
 //   challenge    the problem you faced
 //   solution     how you solved it
 //   outcome      measurable results
+//   link         optional URL for the CTA button on the case study
+//   linkLabel    optional CTA text — defaults to "View Live Site"
 
 // Filter categories shown on the Portfolio page.
 // key must match the `category` field used on projects below.
@@ -48,23 +50,24 @@ export const projects = [
   },
   {
     id: 2,
-    title: "Custom Language Compiler",
+    title: "Minimal++ Interpreter",
     tags: ["C", "Flex", "Bison"],
     category: "systems",
     color: "#34d399",
-    icon: "brand",
-//image: "/Compiler.png",
+    icon: "code",
     description:
-      "A compiler for a custom programming language, covering the full pipeline from lexical analysis and syntax parsing to semantic analysis and code generation.",
-    role: "Systems Engineer",
-    duration: "Academic project",
-    tools: ["C", "Flex", "Bison"],
+      "A compiler front-end and tree-walking interpreter for Minimal++, a Pascal-like teaching language. Source is tokenised, parsed against a hand-written grammar, checked for scope and declaration errors, lowered into an AST, and then executed by walking that tree — all inside a single minicc binary produced by one make.",
+    role: "Compiler Engineer",
+    duration: "Academic project — Compilers course",
+    tools: ["C", "Flex", "Bison", "Make"],
     challenge:
-      "Designing a language grammar and implementing a complete compilation pipeline from scratch — balancing correctness, performance, and clean code generation.",
+      "Minimal++ has control-flow constructs with no mainstream equivalent — forcase runs only the first matching clause, incase runs every matching one, and doublewhile falls through to an else body when its condition is false from the start — so there was no reference grammar to lean on. Harder still, inout parameters pass by reference: the interpreter cannot simply evaluate an argument down to a value, it has to resolve it back to the caller's storage and write the result into it once the call returns.",
     solution:
-      "Implemented lexical analysis with Flex, syntax parsing with Bison, and semantic analysis in C. Focused on efficient code generation and optimisation techniques to ensure fast execution.",
+      "Split the work along clean phase boundaries — Flex owns tokenisation, Bison the grammar and operator precedence, and separate C modules handle the symbol table, scope resolution, AST construction, and evaluation. Scopes are tracked as a stack of symbol tables so names inside nested functions resolve correctly, and inout arguments bind to their caller-side slot instead of being copied. Every stage recovers rather than aborting: lexical faults are repaired and reported, semantic errors let parsing continue, and runtime faults such as division by zero substitute a safe default.",
     outcome:
-      "Successfully compiled and executed programs written in the custom language, demonstrating correct handling of the full compilation pipeline from source to output.",
+      "Runs the full suite of ten sample programs covering control flow, recursion, and both parameter modes. Because each phase recovers instead of halting, a single run surfaces as many real errors as it can find rather than stopping at the first one — the behaviour that actually makes a teaching compiler usable. Open-sourced under MIT.",
+    link: "https://github.com/SteliosChatzis04/Minimal-interpreter",
+    linkLabel: "View on GitHub",
   },
   {
     id: 3,
