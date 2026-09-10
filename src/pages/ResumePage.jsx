@@ -167,21 +167,40 @@ function ParticlesBg() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     let w, h;
+    let particles = [];
+
+    const seed = () => {
+      // Connection lines are O(n²); halving the count on phones quarters that
+      // work, and a smaller screen needs fewer particles to look full anyway.
+      const count = w < 700 ? 22 : 45;
+      particles = Array.from({ length: count }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.5 + 0.5,
+        dx: (Math.random() - 0.5) * 0.25,
+        dy: (Math.random() - 0.5) * 0.25,
+        pulse: Math.random() * Math.PI * 2,
+      }));
+    };
 
     function resize() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = Math.max(window.innerHeight, document.documentElement.scrollHeight);
+      const prevW = w;
+      // The canvas is position:fixed, so its box is the viewport — sizing the
+      // backing store to scrollHeight both distorted the drawing and allocated
+      // a buffer many megabytes larger than anything ever displayed.
+      w = window.innerWidth;
+      h = window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      // Width-only re-seed: mobile URL-bar collapse fires resize on every
+      // scroll, and re-seeding there would make the field flicker.
+      if (!prevW || Math.abs(w - prevW) > 10) seed();
     }
     resize();
 
-    const particles = Array.from({ length: 45 }, () => ({
-      x: Math.random() * (w || 1200),
-      y: Math.random() * (h || 2000),
-      r: Math.random() * 1.5 + 0.5,
-      dx: (Math.random() - 0.5) * 0.25,
-      dy: (Math.random() - 0.5) * 0.25,
-      pulse: Math.random() * Math.PI * 2,
-    }));
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     function draw() {
       ctx.clearRect(0, 0, w, h);
@@ -214,7 +233,7 @@ function ParticlesBg() {
           }
         }
       }
-      animRef.current = requestAnimationFrame(draw);
+      if (!reduceMotion) animRef.current = requestAnimationFrame(draw);
     }
     draw();
 
@@ -255,7 +274,9 @@ export default function ResumePage() {
         body {
           background: #0a0e1a;
           min-height: 100vh;
-          overflow-x: hidden;
+          /* overflow-x is handled on <html> in index.css — setting it here too
+             would make body a scroll container and break the navbar's
+             window.scrollY listener while this page is mounted. */
         }
 
         .timeline-card:hover {
@@ -367,6 +388,9 @@ export default function ResumePage() {
             width: calc(100% - 48px);
           }
 
+          /* Reclaim horizontal room lost to the 48px rail gutter. */
+          .timeline-card { padding: 24px 20px 22px !important; }
+
           .tl-empty { display: none; }
           .tl-connector { display: none; }
         }
@@ -388,7 +412,7 @@ export default function ResumePage() {
         <ParticlesBg />
 
         {/* ── HEADER ── */}
-        <div style={{ paddingTop: 130, position: "relative", zIndex: 1 }}>
+        <div style={{ paddingTop: "clamp(100px, 16vw, 130px)", position: "relative", zIndex: 1 }}>
           <div
             ref={headerRef}
             style={{
@@ -403,7 +427,7 @@ export default function ResumePage() {
           >
             <h1
               style={{
-                fontSize: 50,
+                fontSize: "clamp(30px, 7.5vw, 50px)",
                 fontWeight: 800,
                 fontFamily: fonts.body,
                 lineHeight: 1.15,
@@ -417,7 +441,7 @@ export default function ResumePage() {
             </h1>
             <p
               style={{
-                fontSize: 21,
+                fontSize: "clamp(16px, 4.2vw, 21px)",
                 fontWeight: 500,
                 background: `linear-gradient(135deg, ${colors.sky}, ${colors.indigo})`,
                 WebkitBackgroundClip: "text",
@@ -496,7 +520,7 @@ export default function ResumePage() {
             >
               <h2
                 style={{
-                  fontSize: 34,
+                  fontSize: "clamp(26px, 6vw, 34px)",
                   fontWeight: 700,
                   fontFamily: fonts.body,
                   background: "linear-gradient(135deg, #f1f5f9, #cbd5e1)",

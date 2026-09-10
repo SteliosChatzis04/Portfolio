@@ -83,7 +83,8 @@ export default function PortfolioSection() {
                   key={cat.key}
                   onClick={() => switchCategory(cat.key)}
                   style={{
-                    padding: "9px 24px",
+                    padding: "11px 22px",
+                    minHeight: 40,
                     borderRadius: 100,
                     border: isActive ? `1px solid ${colors.sky}` : `1px solid rgba(148,163,184,0.15)`,
                     background: isActive ? `linear-gradient(135deg, ${colors.sky}15, ${colors.indigo}10)` : "transparent",
@@ -111,10 +112,8 @@ export default function PortfolioSection() {
           </div>
 
           {/* Grid */}
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 22,
+          <div className="r-grid-3" style={{
+            "--r-gap": "22px",
             transformOrigin: "center center",
             ...gridAnim,
           }}>
@@ -147,8 +146,8 @@ export default function PortfolioSection() {
                   <div style={{ position: "relative", borderRadius: 10, overflow: "hidden" }}>
                     <Thumbnail project={project} />
 
-                    {/* Hover overlay */}
-                    <div style={{
+                    {/* Hover overlay — see .r-hover-overlay for the touch-device variant */}
+                    <div className="r-hover-overlay" style={{
                       position: "absolute", inset: 0, borderRadius: 10,
                       background: `linear-gradient(135deg, ${project.color}CC, ${colors.bg}DD)`,
                       opacity: isH ? 1 : 0,

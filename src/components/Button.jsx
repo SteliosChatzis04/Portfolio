@@ -6,7 +6,8 @@ export default function Button({ variant = "primary", onClick, children, style }
   const [hovered, setHovered] = useState(false);
 
   const base = {
-    padding: "16px 38px",
+    // Narrower side padding on phones so a pair of buttons still fits one row.
+    padding: "16px clamp(22px, 6vw, 38px)",
     borderRadius: "8px",
     fontFamily: fonts.body,
     fontSize: "15px",
@@ -14,6 +15,7 @@ export default function Button({ variant = "primary", onClick, children, style }
     cursor: "pointer",
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
     gap: "10px",
     transition: transitions.springFast,
     transform: hovered ? "translateY(-5px) scale(1.04)" : "translateY(0) scale(1)",

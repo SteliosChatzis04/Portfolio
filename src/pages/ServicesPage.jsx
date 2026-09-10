@@ -155,17 +155,19 @@ function WorkflowItem({ step, index, reached, isLast, dotRef }) {
         marginBottom: isLast ? 0 : 80,
       }}
     >
+      {/* wf-cell-body / wf-cell-dot carry explicit grid-columns on mobile, where
+          the alternating left/right layout collapses to dot-then-text. */}
       {isLeft ? (
         <>
-          <div>{textContent}</div>
-          <div>{dotCol}</div>
+          <div className="wf-cell-body">{textContent}</div>
+          <div className="wf-cell-dot">{dotCol}</div>
           <div className="wf-cell-empty" />
         </>
       ) : (
         <>
           <div className="wf-cell-empty" />
-          <div>{dotCol}</div>
-          <div>{textContent}</div>
+          <div className="wf-cell-dot">{dotCol}</div>
+          <div className="wf-cell-body">{textContent}</div>
         </>
       )}
     </div>
@@ -256,21 +258,37 @@ export default function ServicesSection() {
         .cp-ring-2 { border: 1.5px solid rgba(129,140,248,0.55); animation-delay: 160ms; }
         .cp-ring-3 { border: 1px   solid rgba(56,189,248,0.3);  animation-delay: 310ms; }
 
-        /* Mobile: collapse to left-side single column */
-        @media (max-width: 640px) {
+        /* Timeline track — padding lives here so the mobile rule can zero it
+           and keep the rail flush with the left edge. */
+        .wf-track { position: relative; max-width: 700px; margin: 0 auto; padding: 0 24px; }
+        .wf-rail  { left: calc(50% - 1px); }
+
+        /* Mobile: collapse to a left-side single column.
+           The rail moves to x=19 so it runs through the centre of the 40px
+           dot column (dot centre = 20px). */
+        @media (max-width: 720px) {
+          .wf-track { padding: 0; }
+          .wf-rail  { left: 19px; }
+
           .wf-row { grid-template-columns: 40px 1fr !important; }
           .wf-cell-empty { display: none !important; }
-          .wf-cell-text  { text-align: left !important; }
+          .wf-cell-dot   { grid-column: 1 !important; }
+          .wf-cell-body  { grid-column: 2 !important; }
+          .wf-cell-text  {
+            text-align: left !important;
+            padding-left: 20px !important;
+            padding-right: 0 !important;
+          }
         }
       `}</style>
 
       {/* ══ SCREEN 1 — What I Do (full viewport) ══ */}
       <section
+        className="r-screen"
         style={{
-          height: "100vh",
           background: colors.bg,
           fontFamily: fonts.body,
-          padding: "0 40px",
+          padding: "0 var(--page-x)",
           position: "relative",
           overflow: "hidden",
           display: "flex",
@@ -304,7 +322,7 @@ export default function ServicesSection() {
           >
             <h2
               style={{
-                fontSize: 38,
+                fontSize: "clamp(28px, 6vw, 38px)",
                 fontWeight: 700,
                 fontFamily: fonts.body,
                 background: "linear-gradient(135deg, #f1f5f9, #cbd5e1)",
@@ -318,7 +336,7 @@ export default function ServicesSection() {
             <div style={{ width: 40, height: 3, background: `linear-gradient(90deg, ${colors.sky}, ${colors.indigo})`, borderRadius: 2, margin: "0 auto" }} />
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28 }}>
+          <div className="r-grid-3">
             {SERVICES.map((service, i) => (
               <ServiceCard key={service.title} service={service} index={i} />
             ))}
@@ -328,6 +346,7 @@ export default function ServicesSection() {
 
         {/* Scroll hint */}
         <div
+          className="r-scroll-hint"
           style={{
             position: "absolute",
             bottom: 36,
@@ -354,7 +373,7 @@ export default function ServicesSection() {
         style={{
           background: colors.bg,
           fontFamily: fonts.body,
-          padding: "120px 40px 100px",
+          padding: "clamp(80px, 12vw, 120px) var(--page-x) 100px",
           position: "relative",
           overflow: "hidden",
         }}
@@ -374,7 +393,7 @@ export default function ServicesSection() {
           >
             <h2
               style={{
-                fontSize: 30,
+                fontSize: "clamp(25px, 5.5vw, 30px)",
                 fontWeight: 700,
                 fontFamily: fonts.body,
                 background: "linear-gradient(135deg, #f1f5f9, #cbd5e1)",
@@ -389,20 +408,12 @@ export default function ServicesSection() {
           </div>
 
           {/* Workflow timeline */}
-          <div
-            ref={wfContainerRef}
-            style={{
-              position: "relative",
-              maxWidth: 700,
-              margin: "0 auto",
-              padding: "0 24px",
-            }}
-          >
+          <div ref={wfContainerRef} className="wf-track">
             {/* Line — dull background track, centered */}
             <div
+              className="wf-rail"
               style={{
                 position: "absolute",
-                left: "calc(50% - 1px)",
                 top: 0,
                 bottom: 0,
                 width: 2,
@@ -413,9 +424,9 @@ export default function ServicesSection() {
 
             {/* Line — gradient fill, scroll-driven */}
             <div
+              className="wf-rail"
               style={{
                 position: "absolute",
-                left: "calc(50% - 1px)",
                 top: 0,
                 width: 2,
                 height: wfFillPx,

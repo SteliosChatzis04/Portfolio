@@ -24,8 +24,8 @@ export default function ProjectCard({ project, delay, onSelect }) {
             filter:     hovered ? "brightness(1.1)" : "brightness(0.75)",
           }} />
 
-          {/* Hover overlay */}
-          <div style={{
+          {/* Hover overlay — see .r-hover-overlay for the touch-device variant */}
+          <div className="r-hover-overlay" style={{
             position: "absolute", inset: 0,
             background: `linear-gradient(135deg, ${project.color}CC, ${colors.bg}DD)`,
             opacity: hovered ? 1 : 0,

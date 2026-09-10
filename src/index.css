@@ -7,6 +7,22 @@ html { scroll-behavior: smooth; }
 input::placeholder,
 textarea::placeholder { color: #4a5670; }
 
+/* ── Mobile baseline ──
+   - text-size-adjust stops iOS Safari from inflating text in landscape
+   - overflow-x guards against decorative glows/orbs widening the page
+   - tap-highlight + touch-action remove the grey flash and the 300ms tap delay */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+/* Clip sideways overflow at the root only. Setting overflow-x on <body> too
+   would make body its own scroll container (overflow-y:visible computes to
+   auto), which breaks the window scroll listeners in Navbar/ServicesPage. */
+html { overflow-x: hidden; }
+* { -webkit-tap-highlight-color: transparent; }
+button, a, [role="button"] { touch-action: manipulation; }
+
+/* ── Shared layout scale ──
+   --page-x is the horizontal page gutter: 20px on phones, 48px on desktop. */
+:root { --page-x: clamp(20px, 5vw, 48px); }
+
 /* ── Keyframes ── */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
@@ -45,3 +61,72 @@ textarea::placeholder { color: #4a5670; }
   pointer-events: none;
 }
 .btn-cool:hover::after { animation: btnShimmer 0.65s ease forwards; }
+
+/* ════════════════════════════════════════
+   RESPONSIVE HELPERS
+   Applied via className so media queries can override them — inline
+   styles always win, so any property managed here must NOT also be set
+   inline on the same element.
+   ════════════════════════════════════════ */
+
+/* Three-up card grid → two-up on tablets → stacked on phones.
+   Per-instance gap override: style={{ "--r-gap": "22px" }} */
+.r-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--r-gap, clamp(16px, 2.4vw, 28px));
+}
+@media (max-width: 900px) { .r-grid-3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .r-grid-3 { grid-template-columns: 1fr; } }
+
+/* Full-viewport section. svh = "small viewport height": the height with the
+   mobile browser chrome *shown*, so the section never gets clipped as the
+   URL bar collapses. Falls back to vh where svh is unsupported. */
+.r-screen {
+  height: 100vh;
+  height: 100svh;
+}
+@media (max-width: 760px) {
+  /* Stacked content on a phone is usually taller than the viewport — let it
+     grow instead of overflowing, and clear the fixed navbar. */
+  .r-screen {
+    height: auto;
+    min-height: 100svh;
+    padding-top: 108px !important;
+    padding-bottom: 56px !important;
+  }
+}
+
+/* Hover-reveal overlays on project thumbnails.
+   Touch devices have no hover, so the affordance would never appear. There we
+   drop the full-cover scrim and pin the label to a bottom gradient instead. */
+@media (hover: none) {
+  .r-hover-overlay {
+    opacity: 1 !important;
+    background: linear-gradient(to top, rgba(8, 14, 28, 0.9) 0%, rgba(8, 14, 28, 0.35) 45%, transparent 75%) !important;
+    align-items: flex-end !important;
+    padding-bottom: 14px;
+  }
+}
+
+/* iOS Safari zooms the page when a focused input's font-size is under 16px. */
+@media (max-width: 760px) {
+  .r-input { font-size: 16px !important; }
+}
+
+/* Hide purely decorative scroll hints once the page scrolls naturally. */
+@media (max-width: 760px) {
+  .r-scroll-hint { display: none !important; }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}

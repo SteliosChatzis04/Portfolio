@@ -134,7 +134,11 @@ export default function CvRequestModal({ open, onClose }) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "24px",
+        // The form is taller than a phone in landscape (and than a phone in
+        // portrait once the keyboard is up), so the backdrop scrolls.
+        padding: "clamp(16px, 4vw, 24px)",
+        overflowY: "auto",
+        WebkitOverflowScrolling: "touch",
       }}
     >
       <div
@@ -145,10 +149,12 @@ export default function CvRequestModal({ open, onClose }) {
         style={{
           width: "100%",
           maxWidth: 480,
+          margin: "auto",
+          flexShrink: 0,
           background: "#0f1930",
           border: "1px solid rgba(255,255,255,0.1)",
           borderRadius: 16,
-          padding: "36px 30px",
+          padding: "clamp(28px, 6vw, 36px) clamp(20px, 5vw, 30px)",
           position: "relative",
           fontFamily: fonts.body,
           boxShadow: "0 24px 64px rgba(0,0,0,0.6)",
@@ -191,6 +197,7 @@ export default function CvRequestModal({ open, onClose }) {
               </label>
               <div style={{ position: "relative" }}>
                 <input
+                  className="r-input"
                   type="text"
                   disabled={loading}
                   placeholder="John Doe"
@@ -218,6 +225,7 @@ export default function CvRequestModal({ open, onClose }) {
               </label>
               <div style={{ position: "relative" }}>
                 <input
+                  className="r-input"
                   type="email"
                   disabled={loading}
                   placeholder="john@example.com"
@@ -244,6 +252,7 @@ export default function CvRequestModal({ open, onClose }) {
                 Why are you requesting?
               </label>
               <textarea
+                className="r-input"
                 rows={4}
                 disabled={loading}
                 placeholder="e.g. considering you for a role, reviewing your portfolio…"

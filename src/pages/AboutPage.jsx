@@ -110,8 +110,11 @@ export default function AboutSection() {
         .stat-reveal-3 { animation: statReveal 0.6s ease 1.45s forwards; opacity: 0; }
         @media (max-width: 768px) {
           .about-grid      { grid-template-columns: 1fr !important; gap: 40px !important; }
-          .about-stats     { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
-          .about-container { padding: 0 20px !important; }
+          .about-stats     { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; margin-top: 56px !important; padding-top: 40px !important; }
+          .about-container { padding: 0 var(--page-x) !important; }
+          .about-stat      { padding: 0 8px 28px !important; }
+          /* Dividers assume one row; in a 2×2 grid they land mid-layout. */
+          .about-stat-divider { display: none !important; }
         }
       `}</style>
 
@@ -293,17 +296,17 @@ export default function AboutSection() {
             }}
           >
             {STATS.map((s, i) => (
-              <div key={s.label} style={{ textAlign: "center", padding: "0 24px 35px", position: "relative" }}>
+              <div key={s.label} className="about-stat" style={{ textAlign: "center", padding: "0 24px 35px", position: "relative" }}>
                 {/* Vertical divider between items */}
                 {i > 0 && (
-                  <div style={{
+                  <div className="about-stat-divider" style={{
                     position: "absolute", left: 0, top: 8, bottom: 48, width: 1,
                     background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.06) 70%, transparent)",
                   }} />
                 )}
                 <div className={`stat-reveal-${i}`}>
                   <div style={{
-                    fontSize: 64, fontWeight: 800,
+                    fontSize: "clamp(38px, 9vw, 64px)", fontWeight: 800,
                     background: `linear-gradient(135deg, ${colors.purple} 30%, ${colors.accent})`,
                     WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
                     lineHeight: 1, marginBottom: 4, letterSpacing: -2,

@@ -57,12 +57,13 @@ export default function Navbar() {
   return (
     <>
       <style>{`
-        .nb-nav     { padding: 12px 48px !important; }
+        /* max() keeps the bar clear of the iPhone notch under viewport-fit=cover. */
+        .nb-nav     { padding: max(12px, env(safe-area-inset-top)) 48px 12px !important; }
         .nb-desktop { display: flex !important; }
         .nb-burger  { display: none !important; }
 
         @media (max-width: 768px) {
-          .nb-nav     { padding: 12px 20px !important; }
+          .nb-nav     { padding: max(12px, env(safe-area-inset-top)) 20px 12px !important; }
           .nb-desktop { display: none !important; }
           .nb-burger  { display: flex !important; }
         }
@@ -70,9 +71,9 @@ export default function Navbar() {
         .nb-mob-btn {
           background: none; border: none;
           color: ${colors.textPrimary}; font-family: ${fonts.body};
-          font-size: 28px; font-weight: 500;
+          font-size: clamp(22px, 7vw, 28px); font-weight: 500;
           cursor: pointer; letter-spacing: 0.5px;
-          transition: color 0.2s; padding: 10px 0;
+          transition: color 0.2s; padding: 12px 24px;
         }
         .nb-mob-btn:hover, .nb-mob-btn.active { color: ${colors.accent}; }
 
@@ -80,10 +81,16 @@ export default function Navbar() {
           border: 1px solid rgba(0,229,255,0.4); border-radius: 8px;
           background: none; color: ${colors.accent};
           font-family: ${fonts.body}; font-size: 20px; font-weight: 500;
-          cursor: pointer; padding: 10px 32px;
+          cursor: pointer; padding: 12px 32px;
           transition: background 0.2s; margin-top: 12px;
         }
         .nb-mob-resume:hover { background: rgba(0,229,255,0.1); }
+
+        /* Landscape phones are too short for the stacked menu — let it scroll. */
+        @media (max-height: 520px) {
+          .nb-mob-menu { justify-content: flex-start !important; padding: 84px 20px 32px; }
+          .nb-mob-btn  { font-size: 20px; padding: 9px 24px; }
+        }
       `}</style>
 
       {/* ── Fixed bar ── */}
@@ -94,6 +101,7 @@ export default function Navbar() {
           display: "flex", justifyContent: "space-between", alignItems: "center",
           background: scrolled ? "rgba(8,14,28,0.95)" : "transparent",
           backdropFilter: scrolled ? "blur(16px)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
           transition: "all 0.4s ease",
           borderBottom: scrolled ? `1px solid ${colors.border}` : "1px solid transparent",
         }}
@@ -171,7 +179,9 @@ export default function Navbar() {
           aria-label="Toggle menu"
           style={{
             background: "none", border: "none", cursor: "pointer",
-            padding: "8px", alignItems: "center", justifyContent: "center",
+            // 44px minimum — the icon itself is only ~22×16.
+            padding: "8px", minWidth: 44, minHeight: 44,
+            alignItems: "center", justifyContent: "center",
           }}
         >
           <HamburgerIcon open={menuOpen} />
@@ -180,12 +190,17 @@ export default function Navbar() {
 
       {/* ── Mobile full-screen overlay ── */}
       <div
+        className="nb-mob-menu"
+        aria-hidden={!menuOpen}
         style={{
           position: "fixed", inset: 0, zIndex: 99,
           background: "rgba(8,14,28,0.97)",
           backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
           display: "flex", flexDirection: "column",
           alignItems: "center", justifyContent: "center", gap: 4,
+          overflowY: "auto",
+          WebkitOverflowScrolling: "touch",
           opacity:       menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? "auto" : "none",
           transition: "opacity 0.3s ease",

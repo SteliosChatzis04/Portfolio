@@ -31,9 +31,14 @@ export default function ParticleHero() {
     const resize = () => {
       const newW = canvas.parentElement.offsetWidth;
       const newH = canvas.parentElement.offsetHeight;
-      const changed = !w || !h || Math.abs(newW - w) > 10 || Math.abs(newH - h) > 10;
+      // Re-seed on width change only. On mobile the collapsing URL bar fires
+      // resize with a ~60px height delta while scrolling; re-seeding there
+      // would make the field visibly jump mid-scroll.
+      const changed = !w || Math.abs(newW - w) > 10;
       w = newW; h = newH;
-      const dpr = window.devicePixelRatio || 1;
+      // Cap DPR at 2 — a 3x phone screen triples the fill cost for no
+      // perceptible gain on a soft particle glow.
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width  = w * dpr; canvas.height = h * dpr;
       canvas.style.width  = w + "px"; canvas.style.height = h + "px";
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -41,6 +46,9 @@ export default function ParticleHero() {
     };
     resize();
     window.addEventListener("resize", resize);
+
+    // Respect the OS "reduce motion" setting: paint one static frame, no loop.
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const onMove  = (e) => {
       const rect = canvas.getBoundingClientRect();
@@ -111,7 +119,7 @@ export default function ParticleHero() {
           }
         });
       }
-      animRef.current = requestAnimationFrame(draw);
+      if (!reduceMotion) animRef.current = requestAnimationFrame(draw);
     };
     draw();
 

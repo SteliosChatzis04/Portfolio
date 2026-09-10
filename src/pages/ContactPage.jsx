@@ -153,6 +153,15 @@ export default function ContactSection() {
           50% { transform: scale(1.05); opacity: 1; }
           100% { transform: scale(1); opacity: 1; }
         }
+
+        /* Info card beside the form on desktop, stacked on narrow screens. */
+        .contact-split { display: grid; grid-template-columns: 1fr 1.4fr; gap: 40px; align-items: start; }
+        @media (max-width: 860px) {
+          .contact-split { grid-template-columns: 1fr; gap: 24px; }
+        }
+        @media (max-width: 620px) {
+          .contact-card { padding: 28px 20px !important; }
+        }
       `}</style>
 
       <section
@@ -161,7 +170,7 @@ export default function ContactSection() {
           position: "relative",
           background: colors.bg,
           fontFamily: fonts.body,
-          padding: "100px 24px 0",
+          padding: "clamp(84px, 12vw, 100px) var(--page-x) 0",
           overflow: "hidden",
           minHeight: "100vh",
           display: "flex",
@@ -235,12 +244,7 @@ export default function ContactSection() {
           </div>
 
           {/* ── Two-column layout ── */}
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1.4fr",
-            gap: 40,
-            alignItems: "start",
-          }}>
+          <div className="contact-split">
 
             {/* ── Left: Contact info ── */}
             <div
@@ -252,9 +256,10 @@ export default function ContactSection() {
                 transitionDelay: "100ms",
               }}
             >
-              <div style={{
+              <div className="contact-card" style={{
                 background: "rgba(255,255,255,0.03)",
                 backdropFilter: "blur(12px)",
+                WebkitBackdropFilter: "blur(12px)",
                 border: "1px solid rgba(255,255,255,0.06)",
                 borderRadius: 16,
                 padding: "36px 30px",
@@ -371,9 +376,10 @@ export default function ContactSection() {
               }}
             >
               {!submitted ? (
-                <div style={{
+                <div className="contact-card" style={{
                   background: "rgba(255,255,255,0.03)",
                   backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
                   border: "1px solid rgba(255,255,255,0.06)",
                   borderRadius: 16,
                   padding: "36px 30px",
@@ -388,6 +394,7 @@ export default function ContactSection() {
                     </label>
                     <div style={{ position: "relative" }}>
                       <input
+                        className="r-input"
                         type="text"
                         disabled={loading}
                         placeholder="John Doe"
@@ -425,6 +432,7 @@ export default function ContactSection() {
                     </label>
                     <div style={{ position: "relative" }}>
                       <input
+                        className="r-input"
                         type="email"
                         disabled={loading}
                         placeholder="john@example.com"
@@ -462,6 +470,7 @@ export default function ContactSection() {
                     </label>
                     <div style={{ position: "relative" }}>
                       <textarea
+                        className="r-input"
                         rows={5}
                         disabled={loading}
                         placeholder="Describe your project, goals, and timeline..."

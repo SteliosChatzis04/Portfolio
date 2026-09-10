@@ -8,13 +8,17 @@ export default function Footer({ accent = colors.accent, accentEnd = colors.acce
         position: "relative",
         zIndex: 1,
         borderTop: `1px solid ${accent}12`,
-        padding: "28px 48px",
+        // Bottom padding clears the iOS home indicator on notched devices.
+        padding: "28px var(--page-x) calc(28px + env(safe-area-inset-bottom))",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        flexWrap: "wrap",
+        textAlign: "center",
         gap: "10px",
         background: "rgba(6,11,22,0.6)",
         backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
       }}
     >
       <span

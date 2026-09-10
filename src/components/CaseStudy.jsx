@@ -99,10 +99,12 @@ export default function CaseStudy({ project, onBack }) {
           fontFamily: fonts.body,
           fontSize: 13,
           fontWeight: 500,
-          padding: "8px 18px",
+          padding: "10px 18px",
+          minHeight: 40,
           borderRadius: 100,
           marginBottom: 32,
           backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
           transition: "all .25s ease",
         }}
         onMouseEnter={(e) => {
@@ -167,7 +169,7 @@ export default function CaseStudy({ project, onBack }) {
         ))}
 
         {/* Overlaid title + tags */}
-        <div style={{ position: "absolute", bottom: 28, left: 32, right: 32 }}>
+        <div style={{ position: "absolute", bottom: "clamp(16px, 3vw, 28px)", left: "clamp(16px, 3.5vw, 32px)", right: "clamp(16px, 3.5vw, 32px)" }}>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
             {project.tags.map((tag) => (
               <span key={tag} style={{
@@ -292,7 +294,7 @@ export default function CaseStudy({ project, onBack }) {
       {/* ── Description ── */}
       <div style={{
         position: "relative",
-        padding: "28px 32px",
+        padding: "clamp(22px, 4vw, 28px) clamp(20px, 4vw, 32px)",
         borderRadius: 16,
         background: `linear-gradient(135deg, ${c}05, transparent)`,
         border: `1px solid ${c}10`,
@@ -329,7 +331,7 @@ export default function CaseStudy({ project, onBack }) {
               display: "flex",
               alignItems: "center",
               gap: 14,
-              padding: "18px 24px",
+              padding: "18px clamp(16px, 3.5vw, 24px)",
               borderBottom: `1px solid ${c}0e`,
               background: `linear-gradient(90deg, ${c}08, transparent)`,
             }}>
@@ -361,7 +363,7 @@ export default function CaseStudy({ project, onBack }) {
             </div>
 
             {/* Section body */}
-            <div style={{ padding: "20px 24px 22px" }}>
+            <div style={{ padding: "20px clamp(16px, 3.5vw, 24px) 22px" }}>
               <p style={{
                 fontSize: 15,
                 lineHeight: 1.85,
